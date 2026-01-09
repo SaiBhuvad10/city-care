@@ -1,0 +1,82 @@
+/* --- MEDICAL SECTION STYLING --- */
+.medical-section {
+    background-color: #004a80; /* The Dark Blue from your image */
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.medical-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.category-title {
+    color: #ffffff;
+    font-size: 24px;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.product-card img {
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.product-card h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-card p {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 15px;
+    min-height: 32px;
+}
+
+/* Green Price Badge */
+.price-tag {
+    display: inline-block;
+    background-color: #e8f5e9;
+    color: #2e7d32; /* Medical Green */
+    font-weight: 700;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .price-tag {
+    background-color: #2e7d32;
+    color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

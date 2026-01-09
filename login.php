@@ -1,73 +1,104 @@
 <?php
 session_start();
-include 'db.php';
+include "db.php";
 
 $error = "";
 
 if (isset($_POST['login'])) {
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    $sql = "SELECT id, email, password, role FROM users WHERE email=? AND password=?";
-    $stmt = $conn->prepare($sql);
+    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $res = mysqli_query($conn, $sql);
 
-    if (!$stmt) {
-        die("SQL PREPARE FAILED: " . $conn->error);
-    }
+    if (mysqli_num_rows($res) == 1) {
 
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        $row = mysqli_fetch_assoc($res);
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['role'] = $row['role'];
 
-        $_SESSION['user'] = $user['email'];
-        $_SESSION['role'] = $user['role'];
-
-        if ($user['role'] === 'doctor') {
-            header("Location: doctor.php");
-            exit();
-        } else {
-            header("Location: patient.php");
+        if ($row['role'] == "patient") {
+            header("Location: patient-dashboard.php");
             exit();
         }
+
+        if ($row['role'] == "doctor") {
+            header("Location: doctor-dashboard.php");
+            exit();
+        }
+
     } else {
         $error = "Invalid email or password";
     }
 }
 ?>
-<?php include 'includes/header.php'; ?>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
     <style>
-         body {
-    font-family: Arial;
-    background: #4682B4;
-    margin: 0;
-}
-
+        body{
+            background:#f4f6fb;
+            font-family:Arial;
+        }
+        .box{
+            width:350px;
+            margin:100px auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 10px 20px rgba(0,0,0,0.1);
+        }
+        input{
+            width:100%;
+            padding:10px;
+            margin-bottom:15px;
+        }
+        button{
+            width:100%;
+            padding:10px;
+            background:#2563eb;
+            border:none;
+            color:white;
+            cursor:pointer;
+        }
+        .err{
+            color:red;
+            text-align:center;
+            margin-bottom:10px;
+        }
     </style>
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-<div class="page-container">    
-<div class="container">
+    <header class="navbar">
+  <div class="nav-logo">City Care Hospital</div>
+  <nav>
+    <a href="index.php">Home</a>
+    <a href="about.php">About</a>
+    <a href="doctor.php">Doctors</a>
+    <a href="contact.php">Contact</a>
+    <a href="medicines.php">Medical</a>
+    <a href="treatments.php">Treatments</a>
+  </nav>
+  <a href="#" class="nav-btn">Book Appointment</a>
+</header>
+
+<div class="box">
     <h2>Login</h2>
-    <?php if($error != "") echo "<div class='error'>$error</div>"; ?>
-    <form method="post" action="">
+
+    <?php if($error!=""){ ?>
+        <div class="err"><?php echo $error; ?></div>
+    <?php } ?>
+
+    <form method="POST">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit" name="login">Login</button>
-
     </form>
-    <p>Don't have an account? <a href="register.php">Register</a></p>
-    </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+</body>
+</html>

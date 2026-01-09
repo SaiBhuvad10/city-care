@@ -5,8 +5,12 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // show SQL errors
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = $_POST['username'];
+    $email    = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hash password
+    $age      = $_POST['age'];
+    $address  = $_POST['address'];
+    $phone    = $_POST['phone'];
     $role = $_POST['role']; // doctor or patient
 
     // Default doctor_id to NULL
@@ -41,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = "Email already registered!";
         } else {
             // Insert into database
-            $stmt = $conn->prepare("INSERT INTO users (email, password, role, doctor_id) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $email, $password, $role, $doctor_id);
+           $stmt = $conn->prepare("INSERT INTO users (username, email, password, age, address, phone, role) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssiss", $username, $email, $password, $age, $address, $phone, $role);
             if($stmt->execute()){
                 // Redirect to login after successful registration
                 header("Location: login.php");
@@ -60,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Register</title>
     <style>
-        body { font-family: Arial; background:#4682B4; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
-        .container { background:#fff; padding:40px 50px; border-radius:10px; width:400px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+        body { font-family: Arial; background:linear-gradient(200deg, royalblue);; display:flex; justify-content:center; align-items:center; height:100vh; margin:5; }
+        .container { background:whitesmoke; padding:20px 90px; border-radius:10px; width:1000px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
         h2 { margin-bottom: 30px; color: #333; }
         input { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:5px; font-size:16px; }
         button { width:100%; padding:12px; background:#4682B4; border:none; color:#fff; font-size:16px; border-radius:5px; cursor:pointer; margin-top:15px; }
@@ -71,16 +75,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         p a:hover { text-decoration:underline; }
         .error { color:red; margin-bottom:15px; }
     </style>
-
+     <link rel="stylesheet" href="/hospital.mng/assets/css/main.css">
 </head>
 <body>
+    <?php include 'includes/sidebar.php'; ?>
+    <div class="main-wrapper">
+
 <div class="container">
     <h2>Register</h2>
     <?php if($error != "") echo "<div class='error'>$error</div>"; ?>
     
-<form method="post" action="">
+<form method="post" action="register.php">
+    <input type="text" name="username" placeholder="Username" required>
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
+    <input type="number" name="age" placeholder="Age" required>
+    <input type="text" name="address" placeholder="Address" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+     <button type="submit">Register</button>
+</form>
+
 
     <!-- Step 2: Role Selection -->
     <select name="role" id="role" onchange="toggleDoctorKey()">
@@ -93,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="doctor_key" placeholder="Enter Doctor Key">
     </div>
 
-    <button type="submit">Register</button>
+    
 </form>
 
 <script>

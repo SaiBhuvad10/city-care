@@ -1,103 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Hospital Management System</title>
-    <link rel="stylesheet" href="assets/css/home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <title>City Care Hospital</title>
+  <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
 
-<?php include 'includes/sidebar.php'; ?>
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-logo">City Care Hospital</div>
+  <nav>
+    <a href="index.php">Home</a>
+    <a href="about.php">About</a>
+    <a href="doctor.php">Doctors</a>
+    <a href="contact.php">Contact</a>
+    <a href="medicines.php">Medical</a>
+    <a href="treatments.php">Treatments</a>
+  </nav>
+  <a href="#" class="nav-btn">Book Appointment</a>
+</header>
 
-<div class="main-content">
+<section class="hero">
+  <div class="animated-bg"></div>
 
-    <!-- TOP CONTENT -->
-    <section class="welcome-box">
-        <h1>City Care Hospital</h1>
-        <p>Advanced care with experienced doctors</p>
-    </section>
+  <svg class="ecg" viewBox="0 0 1000 200" preserveAspectRatio="none">
+    <path d="M0 100 L120 100 L170 30 L220 170 L270 100 L450 100 L500 50 L550 150 L600 100 L1000 100" />
+  </svg>
 
-    <!-- AUTO SLIDER -->
-    <section class="slider">
-        <div class="slides">
-            <div class="slide">
-                <img src="images/doctors.jpg">
-                <h2>Best Doctors</h2>
-            </div>
-            <div class="slide">
-                <img src="images/hospital.jpg">
-                <h2>Why We Are Best</h2>
-            </div>
-            <div class="slide">
-                <img src="assets/images/patient.jpg">
-                <h2>10000+ Satisfied Patients</h2>
-            </div>
-        </div>
-    </section>
+  <div class="orbs">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-    <!-- SERVICES -->
-   <section class="services">
-    <h2>Our Services</h2>
-    <p class="service-sub">High quality medical services with modern technology</p>
-
-    <div class="service-box">
-
-        <div class="service-card">
-            <i class="fa-solid fa-truck-medical"></i>
-            <h3>24/7 Emergency</h3>
-            <p>Immediate care with advanced emergency facilities and expert staff.</p>
-        </div>
-
-        <div class="service-card">
-            <i class="fa-solid fa-user-doctor"></i>
-            <h3>Qualified Doctors</h3>
-            <p>Highly experienced doctors across all medical specializations.</p>
-        </div>
-
-        <div class="service-card">
-            <i class="fa-solid fa-microscope"></i>
-            <h3>Modern Equipment</h3>
-            <p>Latest diagnostic and surgical equipment for accurate treatment.</p>
-        </div>
-
-        <div class="service-card">
-            <i class="fa-solid fa-calendar-check"></i>
-            <h3>Online Appointment</h3>
-            <p>Book doctor appointments easily from anywhere anytime.</p>
-        </div>
-
-        <div class="service-card">
-            <i class="fas fa-heartbeat"></i>
-            <h3>Cardiology</h3>
-            <p>Heart care and cardiac treatments</p>
-        </div>
-        <div class="service-card">
-            <i class="fas fa-x-ray"></i>
-            <h3>Radiology</h3>
-            <p>Advanced imaging and diagnostics</p>
-        </div>
-        <div class="service-card">
-            <i class="fas fa-stethoscope"></i>
-            <h3>General Surgery</h3>
-            <p>Expert surgical treatments</p>
-        </div>
-    </div>
+  <div class="hero-content">
+    <h1>Advanced Healthcare With Human Touch</h1>
+    <p>Delivering world-class medical services with compassion</p>
+    <br></br>
+    <a href="appointment.php" class="nav-btn">Make an Appointment</a>
+    <a href="login.php" class="nav-btn">Login</a>
+  </div>
 </section>
 
 
+<!-- ABOUT -->
+<section class="about">
+  <img src="images/hl.jpg">
+  <div class="about-text">
+    <h2>Welcome to City Care Hospital</h2>
+    <p>
+      City Care Hospital is a multi-speciality healthcare center
+      providing advanced medical care with experienced doctors
+      and modern infrastructure.
+    </p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div>
+    <h3>⏱️</h3>
+    <h3>25+</h3>
+    <p>Years Experience</p>
+  </div>
+  <div>
+    <h3>🧑‍⚕️</h3>
+    <h3>150+</h3>
+    <p>Doctors</p>
+  </div>
+  <div>
+    <h3>😊</h3>
+    <h3>50,000+</h3>
+    <p>Happy Patients</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <h2 class="section-title">Our Services</h2>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">❤️</div>
+      <h3>Cardiology</h3>
+      <p>Advanced heart care including diagnostics, treatment and interventional cardiology.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🧠</div>
+      <h3>Neurology</h3>
+      <p>Comprehensive care for brain, spine and nervous system disorders.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🦴</div>
+      <h3>Orthopedics</h3>
+      <p>Joint replacement, trauma care and advanced musculoskeletal treatment.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🧪</div>
+      <h3>Diagnostics</h3>
+      <p>Accurate laboratory testing and imaging with modern technology.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🚑</div>
+      <h3>Emergency Care</h3>
+      <p>24×7 emergency services with rapid response and critical care support.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">👶</div>
+      <h3>Pediatrics</h3>
+      <p>Complete healthcare services for infants, children and adolescents.</p>
+    </div>
+
+    <div class="service-card">
+  <div class="service-icon">🩺</div>
+  <h3>General Medicine</h3>
+  <p>Comprehensive diagnosis and treatment for acute and chronic illnesses.</p>
 </div>
 
-<script>
-let index = 0;
-const slides = document.querySelector(".slides");
+<div class="service-card">
+  <div class="service-icon">🩸</div>
+  <h3>Diabetology</h3>
+  <p>Specialized care for diabetes management, prevention and lifestyle guidance.</p>
+</div>
 
-setInterval(() => {
-    index = (index + 1) % 3;
-    slides.style.transform = `translateX(-${index * 100}%)`;
-}, 3000);
-</script>
+
+  </div>
+</section>
+
+
+<!-- DOCTORS -->
+<section class="doctors">
+  <h2>Our Doctors</h2>
+  <div class="doctor-grid">
+    <div class="doctor-card">
+  <img src="images/doctor3.jpg">
+  <h4>Dr. John Rizz</h4>
+  <p>Orthopedic Surgeon</p>
+</div>
+<div class="doctor-card">
+  <img src="images/doctor4.jpg">
+  <h4>Dr. Shena Shinde</h4>
+  <p>Cardiology</p>
+</div>
+    <div class="doctor-card">
+      <img src="images/doctor1.jpg">
+      <h4>Dr. Rahul Mehta</h4>
+      <p>Section Head – Nephrology</p>
+    </div>
+    <div class="doctor-card">
+      <img src="images/doctor2.jpg">
+      <h4>Dr.Elly</h4>
+      <p>Head – ENT Department</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2025 City Care Hospital. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>

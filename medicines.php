@@ -7,10 +7,12 @@
     <title>Medical Section | City Care Hospital</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/medicines.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+
 </head>
 <body>
 
-   <header class="navbar">
+<header class="navbar">
   <div class="nav-logo">City Care Hospital</div>
   <nav>
     <a href="index.php">Home</a>

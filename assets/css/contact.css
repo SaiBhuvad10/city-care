@@ -1,92 +1,189 @@
-.contact-section {
-    padding: 60px 20px;
-    background: #f0f7fa;
-    border-radius: 12px;
-    margin: 40px auto;
-    max-width: 1200px;
+/* --- Shared Header Styles --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+.main-header {
+    width: 100%;
+    background: #fff;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.contact-section h2,
-.main-content h1 {
-    text-align: center;
-    font-size: 32px;
-    color: whitesmoke;
-    margin-bottom: 40px;
-}
-
-.contact-container {
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  z-index: 1000;
 }
 
-.contact-info {
-    flex: 1 1 350px;
-    background: #0a5bd3;
+.nav-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.navbar nav a {
+  margin: 0 14px;
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.nav-btn {
+  background: #2563eb;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+}
+
+.btn-book {
+    background-color: #2563eb;
     color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    padding: 10px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+/* --- CONTACT PAGE SPECIFIC --- */
+.contact-page-wrapper {
+    background-color: #f3f4f6; /* Matching doctors page bg */
+    padding: 60px 0;
+    min-height: calc(100vh - 80px);
 }
 
-.contact-info h3 {
-    margin-bottom: 20px;
+.contact-box-container {
+    background: #fff;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    animation: slideUp 0.8s ease-out forwards;
 }
 
-.contact-info p {
-    font-size: 16px;
-    margin: 12px 0;
-}
-
-.contact-info i {
-    margin-right: 10px;
-    color: #ffeb3b;
-}
-
-/* Contact Form */
-.contact-form {
+.contact-flex {
     display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+    gap: 50px;
+    align-items: flex-start;
 }
 
-.contact-form input,
-.contact-form textarea {
-    padding: 12px 15px;
+/* Left Side Styling */
+.contact-info-side {
+    flex: 1;
+}
+
+.section-title {
+    color: #2563eb;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.details-list {
+    margin-bottom: 35px;
+}
+
+.detail-item {
     margin-bottom: 15px;
-    border: none;
-    border-radius: 8px;
+}
+
+.detail-item strong {
+    display: block;
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.detail-item p {
+    color: #666;
     font-size: 14px;
 }
 
-.contact-form button {
-    padding: 12px;
-    background: #ffeb3b;
-    color: #0a5bd3;
-    border: none;
-    font-weight: bold;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: 0.3s;
+/* Form Styling & Animations */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.contact-form button:hover {
-    background: #0a5bd3;
-    color: white;
-}
-
-/* Google Map */
-.contact-map {
-    flex: 2 1 600px;
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #f9fafb;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .contact-container {
+/* Highlight input on Focus */
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    transform: translateX(5px); /* Subtle shift animation */
+}
+
+.btn-submit {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+}
+
+/* Map Styling */
+.map-side {
+    flex: 1;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 992px) {
+    .contact-flex {
         flex-direction: column;
     }
+    .map-side {
+        width: 100%;
+        height: 350px;
+    }
+    .contact-box-container {
+        padding: 30px;
+    }
+}
+
+/* Keyframes */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
 }

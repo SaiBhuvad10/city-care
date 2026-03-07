@@ -36,10 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items:center;
         }
         .card{
-            background:#fff;
-            width:420px;
+            background:whitesmoke;
+            width:950px;
             padding:30px;
-            border-radius:15px;
+            border-radius:25px;
             box-shadow:0 15px 40px rgba(0,0,0,0.2);
             animation:fadeIn 0.8s ease;
         }
@@ -98,9 +98,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom:15px;
         }
     </style>
+    <link rel="stylesheet" href="/hospital.mng/assets/css/main.css">
 </head>
 <body>
 
+    <!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-logo">City Care Hospital</div>
+  <nav>
+    <a href="index.php">Home</a>
+    <a href="about.php">About</a>
+    <a href="doctor.php">Doctors</a>
+    <a href="contact.php">Contact</a>
+    <a href="medicines.php">Medical</a>
+    <a href="treatments.php">Treatments</a>
+  </nav>
+  <a href="#" class="nav-btn">Book Appointment</a>
+</header>
+
+    <div class="main-wrapper">
 <div class="card">
     <h2><i class="fa-solid fa-calendar-check"></i> Book Appointment</h2>
 

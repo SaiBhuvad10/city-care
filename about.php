@@ -2,107 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | City Care Hospital</title>
-
-    <link rel="stylesheet" href="assets/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/about.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+<header class="navbar">
+  <div class="nav-logo">City Care Hospital</div>
+  <nav>
+    
+    <a href="index.php">Home</a>
+    <a href="about.php">About</a>
+    <a href="doctor.php">Doctors</a>
+    <a href="contact.php">Contact</a>
+    <a href="medicines.php">Medical</a>
 
-<?php include 'includes/sidebar.php'; ?>
 
-<div class="main-content">
+  </nav>
+  <a href="#" class="nav-btn">Book Appointment</a>
+</header>
 
-    <!-- HERO -->
-    <section class="about-hero">
-        <h1>About City Care Hospital</h1>
-        <p>Compassion • Excellence • Trust</p>
-    </section>
+   
 
-    <!-- WHO WE ARE -->
-    <section class="about-section">
-        <h2>Who We Are</h2>
-        <p>
-            City Care Hospital is a multi-speciality healthcare institution delivering
-            advanced medical care using world-class technology and experienced doctors.
-        </p>
-    </section>
-
-    <!-- FOUNDER -->
-    <section class="about-section cards">
-        <div class="card">
-            <i class="fa-solid fa-user-tie"></i>
-            <h3>Our Founder</h3>
-            <p>Founded with the mission to provide ethical and affordable healthcare.</p>
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-lightbulb"></i>
-            <h3>Our Inspiration</h3>
-            <p>Inspired by patient trust, medical excellence and innovation.</p>
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-brain"></i>
-            <h3>Our Philosophy</h3>
-            <p>Patient-first care with transparency, empathy and safety.</p>
+    <section class="page-hero">
+        <div class="container">
+            <h1>About Our Hospital</h1>
+            <p>Your Health, Our Priority – Delivering Excellence in Healthcare</p>
         </div>
     </section>
 
-    <!-- JOURNEY TIMELINE -->
-    <section class="about-section timeline">
-        <h2>Our Journey</h2>
+    <main class="about-section container">
+        <div class="about-grid">
+            <div class="about-image">
+                <img src="images/hl.jpg" alt="City Care Facility">
+            </div>
+            <div class="about-text">
+                <span class="subtitle">Welcome to City Care</span>
+                <h2>Advanced Healthcare With Human Touch</h2>
+                <p>City Care Hospital is a premier <strong>120-bedded multispecialty healthcare facility</strong> dedicated to providing world-class medical services with compassion. Our facility is designed on international standards to ensure the highest level of patient safety and comfort.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Specialties</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">120+</span>
+                        <span class="stat-label">Beds</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Expert Doctors</span>
+                    </div>
+                </div>
 
-        <div class="timeline-item">
-            <span>2010</span>
-            <p>City Care Hospital founded with a single speciality unit.</p>
+                <a href="appointment.php" class="btn-secondary">Make an Appointment</a>
+            </div>
         </div>
 
-        <div class="timeline-item">
-            <span>2015</span>
-            <p>Expanded to multi-speciality hospital with ICU & diagnostics.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-microscope"></i>
+                <h3>Modern Technology</h3>
+                <p>Equipped with state-of-the-art Cathlabs and centrally monitored ICUs.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-md"></i>
+                <h3>Expert Care</h3>
+                <p>Our team of highly qualified doctors ensures personalized treatment plans.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock"></i>
+                <h3>24/7 Emergency</h3>
+                <p>Round-the-clock emergency and trauma services for critical care.</p>
+            </div>
         </div>
-
-        <div class="timeline-item">
-            <span>2022</span>
-            <p>Recognized among top hospitals with advanced technology.</p>
-        </div>
-    </section>
-
-    <!-- BOARD -->
-    <section class="about-section cards">
-        <div class="card">
-            <i class="fa-solid fa-people-group"></i>
-            <h3>Board of Management</h3>
-            <p>Experienced healthcare leaders guiding our vision and growth.</p>
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-hand-holding-heart"></i>
-            <h3>Philanthropy</h3>
-            <p>Supporting underprivileged communities with medical care.</p>
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-award"></i>
-            <h3>Awards</h3>
-            <p>Recognized nationally for quality and patient safety.</p>
-        </div>
-    </section>
-
-    <!-- ACCREDITATIONS -->
-    <section class="about-section highlight">
-        <h2>Accreditations & Certifications</h2>
-        <ul>
-            <li>NABH Accredited Hospital</li>
-            <li>ISO 9001:2015 Certified</li>
-            <li>Quality & Patient Safety Excellence</li>
-        </ul>
-    </section>
-
-</div>
+    </main>
 
 </body>
 </html>

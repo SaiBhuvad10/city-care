@@ -17,6 +17,7 @@
     <a href="contact.php">Contact</a>
     <a href="medicines.php">Medical</a>
     <a href="treatments.php">Treatments</a>
+    <a href="doctor_dashboard.php">Doctors page</a>
   </nav>
   <a href="#" class="nav-btn">Book Appointment</a>
 </header>

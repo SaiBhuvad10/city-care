@@ -18,6 +18,7 @@
     <a href="medicines.php">Medical</a>
     <a href="treatments.php">Treatments</a>
     <a href="doctor_dashboard.php">Doctors page</a>
+    <a href="patient_dashboard.php">Patients page</a>
   </nav>
   <a href="#" class="nav-btn">Book Appointment</a>
 </header>
@@ -41,6 +42,7 @@
     <br></br>
     <a href="appointment.php" class="nav-btn">Make an Appointment</a>
     <a href="login.php" class="nav-btn">Login</a>
+    <a href="signup.php" class="nav-btn">Signup</a>
   </div>
 </section>
 

@@ -4,34 +4,63 @@ include "db.php";
 
 $error = "";
 
-if (isset($_POST['login'])) {
+if(isset($_POST['login'])){
 
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+$email = $_POST['email'];
+$password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-    $res = mysqli_query($conn, $sql);
+/* ---------- CHECK PATIENT ---------- */
 
-    if (mysqli_num_rows($res) == 1) {
+$sql_patient = "SELECT * FROM patients WHERE email='$email'";
+$result_patient = mysqli_query($conn,$sql_patient);
 
-        $row = mysqli_fetch_assoc($res);
+if(mysqli_num_rows($result_patient) == 1){
 
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['role'] = $row['role'];
+$patient = mysqli_fetch_assoc($result_patient);
 
-        if ($row['role'] == "patient") {
-            header("Location: patient-dashboard.php");
-            exit();
-        }
+if($password == $patient['password']){
 
-        if ($row['role'] == "doctor") {
-            header("Location: doctor-dashboard.php");
-            exit();
-        }
+$_SESSION['patient_id'] = $patient['patient_id'];
+$_SESSION['username'] = $patient['name'];
 
-    } else {
-        $error = "Invalid email or password";
-    }
+header("Location: patient-dashboard.php");
+exit();
+
+}else{
+$error = "Wrong Password";
+}
+
+}
+
+/* ---------- CHECK DOCTOR ---------- */
+
+else{
+
+$sql_doctor = "SELECT * FROM doctors WHERE email='$email'";
+$result_doctor = mysqli_query($conn,$sql_doctor);
+
+if(mysqli_num_rows($result_doctor) == 1){
+
+$doctor = mysqli_fetch_assoc($result_doctor);
+
+if($password == $doctor['password']){
+
+$_SESSION['doctor_id'] = $doctor['doctors_id'];
+$_SESSION['username'] = $doctor['name'];
+
+header("Location: doctor_dashboard.php");
+exit();
+
+}else{
+$error = "Wrong Password";
+}
+
+}else{
+$error = "User not found";
+}
+
+}
+
 }
 ?>
 <!DOCTYPE html>

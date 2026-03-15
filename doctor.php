@@ -50,7 +50,7 @@ $result = $stmt->get_result();
                     <h3>Dr. Alan Almeida</h3>
                     <p class="specialty">Section Head – Nephrology</p>
                     <p class="details">Consultant Nephrologist<br>MBBS, MD, MNAMS<br>Fellow – Indian Society of Nephrology</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=Alan Almeida" class="btn">Book Appointment</a>
                 </div>
 
                 <div class="doctor-card">
@@ -60,7 +60,7 @@ $result = $stmt->get_result();
                     <h3>Dr. Elly</h3>
                     <p class="specialty">Head – ENT Department</p>
                     <p class="details">ENT Surgeon<br>MS, DLO, FRCS (ENT)<br>Royal College of Surgeons (UK)</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=Elly" class="btn">Book Appointment</a>
                 </div>
 
                 <div class="doctor-card">
@@ -70,7 +70,7 @@ $result = $stmt->get_result();
                     <h3>Dr. John Rizz</h3>
                     <p class="specialty">Orthopedics</p>
                     <p class="details">MS, DNB - Joint & Bone Specialist</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=John Rizz" class="btn">Book Appointment</a>
                 </div>
 
                 <div class="doctor-card">
@@ -80,7 +80,7 @@ $result = $stmt->get_result();
                     <h3>Dr. Sneha Shinde</h3>
                     <p class="specialty">Cardiology</p>
                     <p class="details">MBBS, MD, DM - Senior Cardiologist,<br>Heart Specialist</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=Sneha Shinde" class="btn">Book Appointment</a>
                 </div>
 
                 <div class="doctor-card">
@@ -90,7 +90,7 @@ $result = $stmt->get_result();
                     <h3>Dr. Ramesh Jain</h3>
                     <p class="specialty">Dermatology</p>
                     <p class="details">MBBS, MD - Skin & Cosmetic<br>Specialist</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=Ramesh Jain" class="btn">Book Appointment</a>
                 </div>
 
                 <div class="doctor-card">
@@ -100,7 +100,7 @@ $result = $stmt->get_result();
                     <h3>Dr. Riddhi Reddy</h3>
                     <p class="specialty">Pediatrics</p>
                     <p class="details">MBBS, MD - Child Health Specialist</p>
-                    <a href="appointment.php" class="btn-card-book">Book Appointment</a>
+                    <a href="appointment.php?doctor=Riddhi Reddy" class="btn">Book Appointment</a>
                 </div>
 
             </div>

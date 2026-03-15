@@ -1,6 +1,10 @@
 <?php
 include 'db.php';
+$doctor_name = "";
 
+if(isset($_GET['doctor'])){
+    $doctor_name = $_GET['doctor'];
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $patient_name = $_POST['patient_name'];
@@ -133,9 +137,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="input-group">
-            <label><i class="fa-solid fa-user-doctor"></i> Doctor Username</label>
-            <input type="text" name="doctor_name" placeholder="doctor1" required>
-        </div>
+    <label><i class="fa-solid fa-user-doctor"></i> Doctor</label>
+    <input type="text" name="doctor_name" value="<?php echo $doctor_name; ?>" readonly>
+</div>
 
         <div class="input-group">
             <label><i class="fa-solid fa-calendar"></i> Date</label>

@@ -1,133 +1,72 @@
-<?php
-session_start();
-include "db.php";
+<?php include 'header.php'; ?>
 
-$error = "";
+<div class="min-h-screen pt-24 flex items-center justify-center px-6 pb-20">
+    <div class="max-w-md w-full bg-white rounded-[3rem] p-12 shadow-2xl">
+        <div class="text-center mb-10">
+            <a href="index.php" class="inline-flex items-center gap-2 mb-6 group">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white transition-transform group-hover:rotate-12">
+                    <i data-lucide="heart-pulse" size="28"></i>
+                </div>
+                <span class="font-display font-bold text-2xl tracking-tight text-primary">City Care</span>
+            </a>
+            <h1 class="text-3xl font-display font-bold text-secondary mb-2">Welcome Back</h1>
+            <p class="text-secondary/60">Log in to your patient portal account</p>
+        </div>
 
-if(isset($_POST['login'])){
+        <form class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Email Address</label>
+                <div class="relative group">
+                    <i data-lucide="mail" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <input
+                        type="email"
+                        class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                        placeholder="john@example.com"
+                    />
+                </div>
+            </div>
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+            <div class="space-y-2">
+                <div class="flex justify-between items-center ml-1">
+                    <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">Password</label>
+                    <a href="#" class="text-sm font-bold text-primary hover:underline">Forgot?</a>
+                </div>
+                <div class="relative group">
+                    <i data-lucide="lock" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <input
+                        type="password"
+                        class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                        placeholder="••••••••"
+                    />
+                </div>
+            </div>
 
-/* ---------- CHECK PATIENT ---------- */
+            <button class="btn-primary w-full py-5 text-lg flex items-center justify-center gap-2">
+                Log In <i data-lucide="arrow-right" size="20"></i>
+            </button>
+        </form>
 
-$sql_patient = "SELECT * FROM patients WHERE email='$email'";
-$result_patient = mysqli_query($conn,$sql_patient);
+        <div class="mt-10">
+            <div class="relative flex items-center gap-4 mb-8">
+                <div class="flex-1 h-px bg-secondary/10"></div>
+                <span class="text-sm text-secondary/40 font-bold uppercase tracking-widest">Or continue with</span>
+                <div class="flex-1 h-px bg-secondary/10"></div>
+            </div>
 
-if(mysqli_num_rows($result_patient) == 1){
+            <div class="grid grid-cols-2 gap-4">
+                <button class="flex items-center justify-center gap-3 bg-surface-soft hover:bg-accent transition-colors py-4 rounded-2xl text-secondary font-bold">
+                    <i data-lucide="chrome" size="20"></i> Google
+                </button>
+                <button class="flex items-center justify-center gap-3 bg-surface-soft hover:bg-accent transition-colors py-4 rounded-2xl text-secondary font-bold">
+                    <i data-lucide="github" size="20"></i> GitHub
+                </button>
+            </div>
+        </div>
 
-$patient = mysqli_fetch_assoc($result_patient);
-
-if($password == $patient['password']){
-
-$_SESSION['patient_id'] = $patient['patient_id'];
-$_SESSION['username'] = $patient['name'];
-
-header("Location: patient-dashboard.php");
-exit();
-
-}else{
-$error = "Wrong Password";
-}
-
-}
-
-/* ---------- CHECK DOCTOR ---------- */
-
-else{
-
-$sql_doctor = "SELECT * FROM doctors WHERE email='$email'";
-$result_doctor = mysqli_query($conn,$sql_doctor);
-
-if(mysqli_num_rows($result_doctor) == 1){
-
-$doctor = mysqli_fetch_assoc($result_doctor);
-
-if($password == $doctor['password']){
-
-$_SESSION['doctor_id'] = $doctor['doctors_id'];
-$_SESSION['username'] = $doctor['name'];
-
-header("Location: doctor_dashboard.php");
-exit();
-
-}else{
-$error = "Wrong Password";
-}
-
-}else{
-$error = "User not found";
-}
-
-}
-
-}
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <style>
-        body{
-            background:#f4f6fb;
-            font-family:Arial;
-        }
-        .box{
-            width:350px;
-            margin:100px auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 10px 20px rgba(0,0,0,0.1);
-        }
-        input{
-            width:100%;
-            padding:10px;
-            margin-bottom:15px;
-        }
-        button{
-            width:100%;
-            padding:10px;
-            background:#2563eb;
-            border:none;
-            color:white;
-            cursor:pointer;
-        }
-        .err{
-            color:red;
-            text-align:center;
-            margin-bottom:10px;
-        }
-    </style>
-    <link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
-    <header class="navbar">
-  <div class="nav-logo">City Care Hospital</div>
-  <nav>
-    <a href="index.php">Home</a>
-    <a href="about.php">About</a>
-    <a href="doctor.php">Doctors</a>
-    <a href="contact.php">Contact</a>
-    <a href="medicines.php">Medical</a>
-    <a href="treatments.php">Treatments</a>
-  </nav>
-  <a href="#" class="nav-btn">Book Appointment</a>
-</header>
-
-<div class="box">
-    <h2>Login</h2>
-
-    <?php if($error!=""){ ?>
-        <div class="err"><?php echo $error; ?></div>
-    <?php } ?>
-
-    <form method="POST">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit" name="login">Login</button>
-    </form>
+        <p class="mt-10 text-center text-secondary/60 font-medium">
+            Don't have an account? <a href="register.php" class="text-primary font-bold hover:underline">Create Account</a>
+        </p>
+    </div>
 </div>
 
-</body>
-</html>
+<?php include 'footer.php'; ?>

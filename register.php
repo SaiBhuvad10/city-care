@@ -1,123 +1,96 @@
-<?php
-include 'db.php';
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // show SQL errors
+<?php include 'header.php'; ?>
 
-$error = "";
+<div class="min-h-screen pt-24 flex items-center justify-center px-6 pb-20">
+    <div class="max-w-xl w-full bg-white rounded-[3rem] p-12 shadow-2xl">
+        <div class="text-center mb-10">
+            <a href="index.php" class="inline-flex items-center gap-2 mb-6 group">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white transition-transform group-hover:rotate-12">
+                    <i data-lucide="heart-pulse" size="28"></i>
+                </div>
+                <span class="font-display font-bold text-2xl tracking-tight text-primary">City Care</span>
+            </a>
+            <h1 class="text-3xl font-display font-bold text-secondary mb-2">Create Account</h1>
+            <p class="text-secondary/60">Join the City Care patient community</p>
+        </div>
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $email    = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hash password
-    $age      = $_POST['age'];
-    $address  = $_POST['address'];
-    $phone    = $_POST['phone'];
-    $role = $_POST['role']; // doctor or patient
+        <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">First Name</label>
+                    <div class="relative group">
+                        <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                        <input
+                            type="text"
+                            class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                            placeholder="John"
+                        />
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Last Name</label>
+                    <div class="relative group">
+                        <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                        <input
+                            type="text"
+                            class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                            placeholder="Doe"
+                        />
+                    </div>
+                </div>
+            </div>
 
-    // Default doctor_id to NULL
-    $doctor_id = NULL;
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Email Address</label>
+                <div class="relative group">
+                    <i data-lucide="mail" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <input
+                        type="email"
+                        class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                        placeholder="john@example.com"
+                    />
+                </div>
+            </div>
 
-    // If user selected Doctor, verify doctor key
-    if($role === 'doctor') {
-        $doctor_key_input = $_POST['doctor_key'] ?? '';
-        $SECRET_KEY = "MYSECRET123"; // only real doctors know this
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Phone Number</label>
+                <div class="relative group">
+                    <i data-lucide="phone" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <input
+                        type="tel"
+                        class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                        placeholder="+1 (555) 000-0000"
+                    />
+                </div>
+            </div>
 
-        if($doctor_key_input !== $SECRET_KEY){
-            $error = "Invalid Doctor Key! Only real doctors can register as doctor.";
-        } else {
-            // Generate unique doctor ID
-            $doctor_id = 'DR' . rand(1000, 9999);
-        }
-    } else {
-        // Role = patient, generate patient ID if needed (optional)
-        $patient_id = 'PT' . rand(1000,9999); 
-        // You can store patient_id in another column if needed
-    }
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Password</label>
+                <div class="relative group">
+                    <i data-lucide="lock" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <input
+                        type="password"
+                        class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all"
+                        placeholder="••••••••"
+                    />
+                </div>
+            </div>
 
-    // If no error, insert user
-    if($error === "") {
-        // Check if email already exists
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $res = $stmt->get_result();
+            <div class="flex items-start gap-3 ml-1">
+                <input type="checkbox" class="mt-1 w-5 h-5 rounded-lg border-none bg-surface-soft text-primary focus:ring-primary/20" />
+                <p class="text-sm text-secondary/60 leading-relaxed">
+                    I agree to the <a href="#" class="text-primary font-bold hover:underline">Terms of Service</a> and <a href="#" class="text-primary font-bold hover:underline">Privacy Policy</a>.
+                </p>
+            </div>
 
-        if($res->num_rows > 0){
-            $error = "Email already registered!";
-        } else {
-            // Insert into database
-           $stmt = $conn->prepare("INSERT INTO users (username, email, password, age, address, phone, role) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssiss", $username, $email, $password, $age, $address, $phone, $role);
-            if($stmt->execute()){
-                // Redirect to login after successful registration
-                header("Location: login.php");
-                exit();
-            } else {
-                $error = "Failed to register user: " . $stmt->error;
-            }
-        }
-    }
-}
-?>
+            <button class="btn-primary w-full py-5 text-lg flex items-center justify-center gap-2">
+                Create Account <i data-lucide="arrow-right" size="20"></i>
+            </button>
+        </form>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-    <style>
-        body { font-family: Arial; background:linear-gradient(200deg, royalblue);; display:flex; justify-content:center; align-items:center; height:100vh; margin:5; }
-        .container { background:whitesmoke; padding:20px 90px; border-radius:10px; width:1000px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
-        h2 { margin-bottom: 30px; color: #333; }
-        input { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:5px; font-size:16px; }
-        button { width:100%; padding:12px; background:#4682B4; border:none; color:#fff; font-size:16px; border-radius:5px; cursor:pointer; margin-top:15px; }
-        button:hover { background:#315f8a; }
-        p { margin-top:20px; font-size:14px; }
-        p a { color:#4682B4; font-weight:bold; text-decoration:none; }
-        p a:hover { text-decoration:underline; }
-        .error { color:red; margin-bottom:15px; }
-    </style>
-     <link rel="stylesheet" href="/hospital.mng/assets/css/main.css">
-</head>
-<body>
-    <?php include 'includes/sidebar.php'; ?>
-    <div class="main-wrapper">
-
-<div class="container">
-    <h2>Register</h2>
-    <?php if($error != "") echo "<div class='error'>$error</div>"; ?>
-    
-<form method="post" action="register.php">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="number" name="age" placeholder="Age" required>
-    <input type="text" name="address" placeholder="Address" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-     <button type="submit">Register</button>
-</form>
-
-
-    <!-- Step 2: Role Selection -->
-    <select name="role" id="role" onchange="toggleDoctorKey()">
-        <option value="patient">Patient</option>
-        <option value="doctor">Doctor</option>
-    </select>
-
-    <!-- Step 3: Doctor Key Input (hidden by default) -->
-    <div id="doctorKeyDiv" style="display:none;">
-        <input type="text" name="doctor_key" placeholder="Enter Doctor Key">
+        <p class="mt-10 text-center text-secondary/60 font-medium">
+            Already have an account? <a href="login.php" class="text-primary font-bold hover:underline">Log In</a>
+        </p>
     </div>
-
-    
-</form>
-
-<script>
-function toggleDoctorKey(){
-    var role = document.getElementById('role').value;
-    document.getElementById('doctorKeyDiv').style.display = (role === 'doctor') ? 'block' : 'none';
-}
-</script>
-    </form>
-    <p>Already have an account? <a href="login.php">Login</a></p>
 </div>
-</body>
-</html>
+
+<?php include 'footer.php'; ?>

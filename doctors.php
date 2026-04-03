@@ -1,0 +1,150 @@
+<?php include 'header.php'; ?>
+
+<div class="pt-24 min-h-screen">
+    <!-- Header Section -->
+    <section class="px-6 py-20 bg-surface-soft">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-7xl font-display font-extrabold text-secondary leading-tight mb-8">
+                World-class specialists <br /> <span class="text-primary italic">dedicated</span> to your care.
+            </h1>
+            <p class="text-xl text-secondary/70 leading-relaxed max-w-3xl mx-auto mb-12">
+                Our team of highly skilled and compassionate doctors is here to provide you with the best medical care and support.
+            </p>
+            
+            <!-- Search and Filter Bar -->
+            <div class="max-w-4xl mx-auto glass-bar rounded-full p-2 flex flex-col md:flex-row items-center gap-2 shadow-xl">
+                <div class="flex-1 flex items-center justify-center gap-4 px-6 py-3 w-full">
+                    <i data-lucide="search" class="text-secondary/40" size="20"></i>
+                    <input
+                        type="text"
+                        placeholder="Search by name or specialty..."
+                        class="bg-transparent border-none outline-none w-full text-secondary font-medium placeholder:text-secondary/40 text-center"
+                    />
+                </div>
+                <div class="h-8 w-px bg-secondary/10 hidden md:block"></div>
+                <div class="flex items-center gap-4 px-6 py-3 w-full md:w-auto">
+                    <i data-lucide="filter" class="text-secondary/40" size="20"></i>
+                    <select class="bg-transparent border-none outline-none text-secondary font-medium cursor-pointer">
+                        <option>All Specialties</option>
+                        <option>Cardiology</option>
+                        <option>Neurology</option>
+                        <option>Pediatrics</option>
+                    </select>
+                </div>
+                <button class="btn-primary w-full md:w-auto px-10">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Grid -->
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <?php
+            $doctors = [
+                [
+                    'name' => 'Dr. Sarah Johnson',
+                    'specialty' => 'Cardiologist',
+                    'rating' => 4.9,
+                    'reviews' => 124,
+                    'experience' => '15 years',
+                    'image' => 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&q=80&w=600',
+                ],
+                [
+                    'name' => 'Dr. Michael Chen',
+                    'specialty' => 'Neurologist',
+                    'rating' => 4.8,
+                    'reviews' => 98,
+                    'experience' => '12 years',
+                    'image' => 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600',
+                ],
+                [
+                    'name' => 'Dr. Emily Brown',
+                    'specialty' => 'Pediatrician',
+                    'rating' => 5.0,
+                    'reviews' => 156,
+                    'experience' => '10 years',
+                    'image' => 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=600',
+                ],
+                [
+                    'name' => 'Dr. David Wilson',
+                    'specialty' => 'Orthopedic Surgeon',
+                    'rating' => 4.7,
+                    'reviews' => 87,
+                    'experience' => '18 years',
+                    'image' => 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600',
+                ],
+                [
+                    'name' => 'Dr. Lisa Garcia',
+                    'specialty' => 'Dermatologist',
+                    'rating' => 4.9,
+                    'reviews' => 112,
+                    'experience' => '9 years',
+                    'image' => 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600',
+                ],
+                [
+                    'name' => 'Dr. James Lee',
+                    'specialty' => 'General Surgeon',
+                    'rating' => 4.8,
+                    'reviews' => 76,
+                    'experience' => '20 years',
+                    'image' => 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=600',
+                ],
+            ];
+
+            foreach ($doctors as $doctor):
+            ?>
+            <div class="bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group">
+                <div class="aspect-[4/5] overflow-hidden relative">
+                    <img
+                        src="<?php echo $doctor['image']; ?>"
+                        alt="<?php echo $doctor['name']; ?>"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        referrerPolicy="no-referrer"
+                    />
+                    <div class="absolute top-6 right-6 glass-bar px-4 py-2 rounded-full flex items-center gap-2 text-secondary font-bold">
+                        <i data-lucide="star" size="16" class="text-yellow-500 fill-yellow-500"></i>
+                        <?php echo $doctor['rating']; ?>
+                    </div>
+                </div>
+                <div class="p-10">
+                    <div class="text-primary font-bold text-sm uppercase tracking-widest mb-2"><?php echo $doctor['specialty']; ?></div>
+                    <h3 class="text-2xl font-display font-bold text-secondary mb-4"><?php echo $doctor['name']; ?></h3>
+                    <div class="flex items-center gap-6 text-secondary/60 mb-8 font-medium">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="calendar" size="18"></i>
+                            <?php echo $doctor['experience']; ?>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="message-square" size="18"></i>
+                            <?php echo $doctor['reviews']; ?> Reviews
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="btn-primary flex-1 py-3 text-sm">Book Appointment</button>
+                        <button class="w-12 h-12 rounded-full bg-surface-soft flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <i data-lucide="arrow-right" size="20"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <!-- Join Our Team CTA -->
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto bg-accent rounded-[4rem] p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="max-w-xl text-center md:text-left">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary mb-6">
+                    Are you a medical professional?
+                </h2>
+                <p class="text-lg text-secondary/70 leading-relaxed">
+                    Join our team of world-class specialists and help us shape the future of healthcare. We offer a collaborative environment and state-of-the-art facilities.
+                </p>
+            </div>
+            <button class="btn-primary px-12 py-5 text-lg">Apply to Join</button>
+        </div>
+    </section>
+</div>
+
+<?php include 'footer.php'; ?>

@@ -6,8 +6,9 @@ require 'db_connect.php';
 
 // IMPORTANT: Replace these with your actual Google API credentials
 // Do not hardcode these values in a public repository!
-$client_id = 'YOUR_GOOGLE_CLIENT_ID';
-$client_secret = 'YOUR_GOOGLE_CLIENT_SECRET';
+include 'secrets.php';
+$client_id = $google_client_id;
+$client_secret = $google_client_secret;
 $redirect_uri = 'http://localhost/city-care/google_callback.php';
 
 if (isset($_GET['code'])) {

@@ -1,6 +1,7 @@
 <?php
 // Replace with your actual Google Client ID
-$client_id = '722172735904-kb44tu7m6bsm5fk4pe6ehpk60pb1tee4.apps.googleusercontent.com';
+include 'secrets.php';
+$client_id = $google_client_id;
 $redirect_uri = 'http://localhost/city-care/google_callback.php';
 $scope = 'email profile';
 

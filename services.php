@@ -1,4 +1,10 @@
-<?php include 'header.php'; ?>
+<?php 
+include 'header.php'; 
+include 'db_connect.php';
+
+$sql = "SELECT * FROM services";
+$result = $conn->query($sql);
+?>
 
 <div class="pt-24 min-h-screen">
     <!-- Header Section -->
@@ -17,66 +23,37 @@
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <?php
-            $services = [
-                [
-                    'title' => 'Cardiology',
-                    'icon' => 'heart',
-                    'desc' => 'Our cardiology department provides comprehensive heart care, including diagnostics, treatment, and rehabilitation for cardiac conditions.',
-                    'features' => ['Heart Surgery', 'Diagnostic Testing', 'Cardiac Rehab'],
-                ],
-                [
-                    'title' => 'Neurology',
-                    'icon' => 'brain',
-                    'desc' => 'Expert care for neurological disorders, from stroke management to specialized treatments for epilepsy and multiple sclerosis.',
-                    'features' => ['Brain Imaging', 'Stroke Care', 'Sleep Studies'],
-                ],
-                [
-                    'title' => 'Pediatrics',
-                    'icon' => 'baby',
-                    'desc' => 'Dedicated to the health and well-being of children, offering routine check-ups, vaccinations, and specialized pediatric care.',
-                    'features' => ['Well-child Visits', 'Immunizations', 'Pediatric Surgery'],
-                ],
-                [
-                    'title' => 'Orthopedics',
-                    'icon' => 'activity',
-                    'desc' => 'Specialized care for bone and joint health, including joint replacement, sports medicine, and physical therapy.',
-                    'features' => ['Joint Replacement', 'Sports Medicine', 'Physical Therapy'],
-                ],
-                [
-                    'title' => 'Diagnostic Labs',
-                    'icon' => 'microscope',
-                    'desc' => 'State-of-the-art laboratory services providing accurate and timely diagnostic testing for effective treatment planning.',
-                    'features' => ['Blood Tests', 'Pathology', 'Molecular Diagnostics'],
-                ],
-                [
-                    'title' => 'Emergency Care',
-                    'icon' => 'stethoscope',
-                    'desc' => '24/7 emergency medical services with a highly trained team ready to handle critical situations with speed and precision.',
-                    'features' => ['Trauma Care', 'Critical Care', 'Ambulance Service'],
-                ],
-            ];
-
-            foreach ($services as $service):
+            if ($result->num_rows > 0):
+                while($service = $result->fetch_assoc()):
             ?>
             <div class="bg-white rounded-[3rem] p-10 shadow-sm hover:shadow-2xl transition-all duration-500 group">
                 <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
                     <i data-lucide="<?php echo $service['icon']; ?>" size="32"></i>
                 </div>
                 <h3 class="text-2xl font-display font-bold text-secondary mb-4"><?php echo $service['title']; ?></h3>
-                <p class="text-secondary/70 leading-relaxed mb-8"><?php echo $service['desc']; ?></p>
+                <p class="text-secondary/70 leading-relaxed mb-8"><?php echo $service['description']; ?></p>
                 <ul class="space-y-3 mb-8">
-                    <?php foreach ($service['features'] as $feature): ?>
                     <li class="flex items-center gap-3 text-secondary/60">
                         <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                        <?php echo $feature; ?>
+                        Advanced Diagnostics
                     </li>
-                    <?php endforeach; ?>
+                    <li class="flex items-center gap-3 text-secondary/60">
+                        <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                        Expert Consultation
+                    </li>
+                    <li class="flex items-center gap-3 text-secondary/60">
+                        <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                        Personalized Care
+                    </li>
                 </ul>
                 <button class="text-primary font-bold flex items-center gap-2 group/btn">
                     Learn More <i data-lucide="activity" size="18" class="transition-transform group-hover/btn:translate-x-1"></i>
                 </button>
             </div>
-            <?php endforeach; ?>
+            <?php 
+                endwhile;
+            endif; 
+            ?>
         </div>
     </section>
 

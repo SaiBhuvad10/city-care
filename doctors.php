@@ -1,4 +1,22 @@
-<?php include 'header.php'; ?>
+<?php 
+include 'header.php'; 
+include 'db_connect.php';
+$conn->query("UPDATE doctors SET image_url = 'https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400' WHERE name LIKE '%Sarah Johnson%'");
+$conn->query("UPDATE doctors SET image_url = 'https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=400' WHERE name LIKE '%James Wilson%'");
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$specialty = isset($_GET['specialty']) ? $_GET['specialty'] : 'All Specialties';
+
+$sql = "SELECT * FROM doctors WHERE 1=1";
+if ($search != '') {
+    $sql .= " AND (name LIKE '%$search%' OR specialty LIKE '%$search%')";
+}
+if ($specialty != 'All Specialties') {
+    $sql .= " AND specialty = '$specialty'";
+}
+
+$result = $conn->query($sql);
+?>
 
 <div class="pt-24 min-h-screen">
     <!-- Header Section -->
@@ -12,11 +30,13 @@
             </p>
             
             <!-- Search and Filter Bar -->
-            <div class="max-w-4xl mx-auto glass-bar rounded-full p-2 flex flex-col md:flex-row items-center gap-2 shadow-xl">
+            <form action="doctors.php" method="GET" class="max-w-4xl mx-auto glass-bar rounded-full p-2 flex flex-col md:flex-row items-center gap-2 shadow-xl">
                 <div class="flex-1 flex items-center justify-center gap-4 px-6 py-3 w-full">
                     <i data-lucide="search" class="text-secondary/40" size="20"></i>
                     <input
                         type="text"
+                        name="search"
+                        value="<?php echo htmlspecialchars($search); ?>"
                         placeholder="Search by name or specialty..."
                         class="bg-transparent border-none outline-none w-full text-secondary font-medium placeholder:text-secondary/40 text-center"
                     />
@@ -24,15 +44,18 @@
                 <div class="h-8 w-px bg-secondary/10 hidden md:block"></div>
                 <div class="flex items-center gap-4 px-6 py-3 w-full md:w-auto">
                     <i data-lucide="filter" class="text-secondary/40" size="20"></i>
-                    <select class="bg-transparent border-none outline-none text-secondary font-medium cursor-pointer">
-                        <option>All Specialties</option>
-                        <option>Cardiology</option>
-                        <option>Neurology</option>
-                        <option>Pediatrics</option>
+                    <select name="specialty" class="bg-transparent border-none outline-none text-secondary font-medium cursor-pointer">
+                        <option <?php echo $specialty == 'All Specialties' ? 'selected' : ''; ?>>All Specialties</option>
+                        <option <?php echo $specialty == 'Cardiology' ? 'selected' : ''; ?>>Cardiology</option>
+                        <option <?php echo $specialty == 'Neurology' ? 'selected' : ''; ?>>Neurology</option>
+                        <option <?php echo $specialty == 'Pediatrics' ? 'selected' : ''; ?>>Pediatrics</option>
+                        <option <?php echo $specialty == 'Orthopedic Surgeon' ? 'selected' : ''; ?>>Orthopedic Surgeon</option>
+                        <option <?php echo $specialty == 'Oncologist' ? 'selected' : ''; ?>>Oncologist</option>
+                        <option <?php echo $specialty == 'Dermatologist' ? 'selected' : ''; ?>>Dermatologist</option>
                     </select>
                 </div>
-                <button class="btn-primary w-full md:w-auto px-10">Search</button>
-            </div>
+                <button type="submit" class="btn-primary w-full md:w-auto px-10">Search</button>
+            </form>
         </div>
     </section>
 
@@ -40,63 +63,13 @@
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <?php
-            $doctors = [
-                [
-                    'name' => 'Dr. Sarah Johnson',
-                    'specialty' => 'Cardiologist',
-                    'rating' => 4.9,
-                    'reviews' => 124,
-                    'experience' => '15 years',
-                    'image' => 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&q=80&w=600',
-                ],
-                [
-                    'name' => 'Dr. Michael Chen',
-                    'specialty' => 'Neurologist',
-                    'rating' => 4.8,
-                    'reviews' => 98,
-                    'experience' => '12 years',
-                    'image' => 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600',
-                ],
-                [
-                    'name' => 'Dr. Emily Brown',
-                    'specialty' => 'Pediatrician',
-                    'rating' => 5.0,
-                    'reviews' => 156,
-                    'experience' => '10 years',
-                    'image' => 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=600',
-                ],
-                [
-                    'name' => 'Dr. David Wilson',
-                    'specialty' => 'Orthopedic Surgeon',
-                    'rating' => 4.7,
-                    'reviews' => 87,
-                    'experience' => '18 years',
-                    'image' => 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600',
-                ],
-                [
-                    'name' => 'Dr. Lisa Garcia',
-                    'specialty' => 'Dermatologist',
-                    'rating' => 4.9,
-                    'reviews' => 112,
-                    'experience' => '9 years',
-                    'image' => 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600',
-                ],
-                [
-                    'name' => 'Dr. James Lee',
-                    'specialty' => 'General Surgeon',
-                    'rating' => 4.8,
-                    'reviews' => 76,
-                    'experience' => '20 years',
-                    'image' => 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=600',
-                ],
-            ];
-
-            foreach ($doctors as $doctor):
+            if ($result->num_rows > 0):
+                while($doctor = $result->fetch_assoc()):
             ?>
             <div class="bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group">
                 <div class="aspect-[4/5] overflow-hidden relative">
                     <img
-                        src="<?php echo $doctor['image']; ?>"
+                        src="<?php echo $doctor['image_url']; ?>"
                         alt="<?php echo $doctor['name']; ?>"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         referrerPolicy="no-referrer"
@@ -116,18 +89,26 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <i data-lucide="message-square" size="18"></i>
-                            <?php echo $doctor['reviews']; ?> Reviews
+                            100+ Reviews
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <button class="btn-primary flex-1 py-3 text-sm">Book Appointment</button>
+                        <a href="book_appointment.php?doctor_id=<?php echo $doctor['id']; ?>" class="btn-primary flex-1 py-3 text-sm text-center font-bold">Book Appointment</a>
                         <button class="w-12 h-12 rounded-full bg-surface-soft flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
                             <i data-lucide="arrow-right" size="20"></i>
                         </button>
                     </div>
                 </div>
             </div>
-            <?php endforeach; ?>
+            <?php 
+                endwhile;
+            else:
+            ?>
+                <div class="col-span-full text-center py-20">
+                    <h3 class="text-2xl font-display font-bold text-secondary">No doctors found matching your criteria.</h3>
+                    <p class="text-secondary/60 mt-4">Try adjusting your search or filters.</p>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 

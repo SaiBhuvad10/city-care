@@ -1,3 +1,8 @@
+<?php 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,7 +89,23 @@
                 <a href="services.php" class="font-medium transition-colors hover:text-primary">Services</a>
                 <a href="doctors.php" class="font-medium transition-colors hover:text-primary">Doctors</a>
                 <a href="patient-care.php" class="font-medium transition-colors hover:text-primary">Patient Care</a>
-                <a href="login.php" class="btn-primary py-2 px-6 text-sm">Login</a>
+                
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
+                        <a href="admin_dashboard.php" class="font-bold transition-colors hover:text-primary ">Admin Portal</a>
+                    <?php else: ?>
+                        <a href="my_appointments.php" class="font-bold transition-colors hover:text-primary ">My Appointments</a>
+                    <?php endif; ?>
+                    <div class="flex items-center gap-4 border-l border-secondary/20 pl-6 ml-2">
+                        <div class="flex items-center gap-2 bg-surface-soft pl-1 pr-4 py-1 rounded-full border border-secondary/10">
+                            <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($_SESSION['user_name']); ?>&background=0052c6&color=fff&rounded=true" alt="User" class="w-8 h-8 rounded-full">
+                            <span class="text-sm font-bold text-secondary">Hi, <?php echo explode(' ', $_SESSION['user_name'])[0]; ?></span>
+                        </div>
+                        <a href="logout.php" class="text-sm font-bold text-primary hover:underline ml-2">Logout</a>
+                    </div>
+                <?php else: ?>
+                    <a href="login.php" class="btn-primary py-2 px-6 text-sm">Login</a>
+                <?php endif; ?>
             </div>
 
             <button class="md:hidden text-secondary p-2" id="mobile-menu-toggle">
@@ -99,7 +120,21 @@
                 <a href="doctors.php" class="text-lg font-medium">Doctors</a>
                 <a href="patient-care.php" class="text-lg font-medium">Patient Care</a>
                 <hr class="border-secondary/10" />
-                <a href="login.php" class="btn-primary text-center">Login</a>
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
+                        <a href="admin_dashboard.php" class="text-lg font-bold text-primary">Admin Portal</a>
+                    <?php else: ?>
+                        <a href="my_appointments.php" class="text-lg font-bold text-primary">My Appointments</a>
+                    <?php endif; ?>
+                    <hr class="border-secondary/10 my-2" />
+                    <div class="flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($_SESSION['user_name']); ?>&background=0052c6&color=fff&rounded=true" alt="User" class="w-10 h-10 rounded-full shadow-sm">
+                        <span class="text-lg font-medium text-secondary">Hi, <?php echo $_SESSION['user_name']; ?></span>
+                    </div>
+                    <a href="logout.php" class="btn-secondary text-center mt-4">Logout</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn-primary text-center">Login</a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

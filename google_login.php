@@ -1,0 +1,10 @@
+<?php
+// Replace with your actual Google Client ID
+$client_id = '722172735904-kb44tu7m6bsm5fk4pe6ehpk60pb1tee4.apps.googleusercontent.com';
+$redirect_uri = 'http://localhost/city-care/google_callback.php';
+$scope = 'email profile';
+
+$login_url = 'https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=' . urlencode($client_id) . '&redirect_uri=' . urlencode($redirect_uri) . '&scope=' . urlencode($scope);
+header('Location: ' . $login_url);
+exit();
+?>

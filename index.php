@@ -1,4 +1,14 @@
-<?php include 'header.php'; ?>
+<?php 
+include 'header.php'; 
+include 'db_connect.php';
+
+// Fetch stats
+$doctorCount = $conn->query("SELECT COUNT(*) as count FROM doctors")->fetch_assoc()['count'];
+$serviceCount = $conn->query("SELECT COUNT(*) as count FROM services")->fetch_assoc()['count'];
+
+// Fetch featured services
+$featuredServices = $conn->query("SELECT * FROM services LIMIT 3");
+?>
 
 <div class="pt-24">
     <!-- Hero Section -->
@@ -56,7 +66,7 @@
                 <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-primary mx-auto mb-4 shadow-sm">
                     <i data-lucide="users" size="24"></i>
                 </div>
-                <div class="text-3xl font-display font-bold text-secondary mb-1">150+</div>
+                <div class="text-3xl font-display font-bold text-secondary mb-1"><?php echo $doctorCount; ?>+</div>
                 <div class="text-secondary/50 font-medium">Specialists</div>
             </div>
             <div class="text-center">
@@ -101,36 +111,18 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <?php while($service = $featuredServices->fetch_assoc()): ?>
                 <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&q=80&w=600" alt="Cardiology" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" referrerPolicy="no-referrer">
+                    <div class="aspect-video overflow-hidden bg-primary/10 flex items-center justify-center text-primary">
+                        <i data-lucide="<?php echo $service['icon']; ?>" size="64"></i>
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-display font-bold text-secondary mb-4">Cardiology</h3>
-                        <p class="text-secondary/70 leading-relaxed mb-6">Advanced heart care using the latest diagnostic and treatment technologies.</p>
+                        <h3 class="text-2xl font-display font-bold text-secondary mb-4"><?php echo $service['title']; ?></h3>
+                        <p class="text-secondary/70 leading-relaxed mb-6"><?php echo $service['description']; ?></p>
                         <a href="services.php" class="text-primary font-semibold flex items-center gap-2">Learn More <i data-lucide="arrow-right" size="18"></i></a>
                     </div>
                 </div>
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=600" alt="Neurology" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" referrerPolicy="no-referrer">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-display font-bold text-secondary mb-4">Neurology</h3>
-                        <p class="text-secondary/70 leading-relaxed mb-6">Specialized care for disorders of the nervous system and brain health.</p>
-                        <a href="services.php" class="text-primary font-semibold flex items-center gap-2">Learn More <i data-lucide="arrow-right" size="18"></i></a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=600" alt="Pediatrics" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" referrerPolicy="no-referrer">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-display font-bold text-secondary mb-4">Pediatrics</h3>
-                        <p class="text-secondary/70 leading-relaxed mb-6">Compassionate medical care for infants, children, and adolescents.</p>
-                        <a href="services.php" class="text-primary font-semibold flex items-center gap-2">Learn More <i data-lucide="arrow-right" size="18"></i></a>
-                    </div>
-                </div>
+                <?php endwhile; ?>
             </div>
         </div>
     </section>
@@ -150,7 +142,7 @@
                     Book your appointment today and take the first step towards a healthier, happier life with City Care Hospital.
                 </p>
                 <div class="flex flex-wrap justify-center gap-6">
-                    <a href="login.php" class="bg-white text-primary px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                    <a href="<?php echo isset($_SESSION['user_id']) ? 'my_appointments.php' : 'login.php'; ?>" class="bg-white text-primary px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">
                         Book Appointment
                     </a>
                     <a href="doctors.php" class="bg-primary-dark border border-white/20 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-colors">

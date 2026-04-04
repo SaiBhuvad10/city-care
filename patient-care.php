@@ -134,26 +134,27 @@
             </div>
             <div class="bg-white rounded-[3rem] p-10 text-secondary shadow-2xl">
                 <h3 class="text-3xl font-display font-bold mb-8">Send us a message</h3>
-                <form class="space-y-6">
+                <form action="https://formspree.io/f/mgoppvga" method="POST" id="contact" class="space-y-6">
+
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">First Name</label>
-                            <input type="text" class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="John">
+                            <input type="text" name="first_name" required class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="John">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">Last Name</label>
-                            <input type="text" class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="Doe">
+                            <input type="text" name="last_name" required class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="Doe">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">Email Address</label>
-                        <input type="email" class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="john@example.com">
+                        <input type="email" name="email" required class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20" placeholder="john@example.com">
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">Message</label>
-                        <textarea class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20 h-32 resize-none" placeholder="How can we help you?"></textarea>
+                        <textarea name="message" required class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20 h-32 resize-none" placeholder="How can we help you?"></textarea>
                     </div>
-                    <button class="btn-primary w-full py-5 text-lg">Send Message</button>
+                    <button type="submit" name="contact_submit" class="btn-primary w-full py-5 text-lg">Send Message</button>
                 </form>
             </div>
         </div>

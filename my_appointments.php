@@ -37,7 +37,10 @@ include 'header.php';
                 <h1 class="text-4xl font-display font-bold text-secondary mb-2">My Appointments</h1>
                 <p class="text-secondary/70">Manage and track your scheduled visits with our specialists.</p>
             </div>
-            <a href="doctors.php" class="btn-primary mt-6 md:mt-0 px-8">Book New Appointment</a>
+            <div class="flex gap-4 mt-6 md:mt-0">
+                <a href="patient_messages.php" class="btn-secondary px-8 flex items-center gap-2"><i data-lucide="message-square" size="18"></i> Message Hospital</a>
+                <a href="doctors.php" class="btn-primary px-8 flex items-center gap-2">Book New Appointment</a>
+            </div>
         </div>
 
         <?php if($success_msg): ?>
@@ -94,7 +97,20 @@ include 'header.php';
                                 <i data-lucide="clock" size="18" class="text-primary"></i>
                                 <?php echo $formattedTime; ?>
                             </div>
+                            
+                            <div class="flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-xl font-bold uppercase tracking-widest text-xs">
+                                <i data-lucide="<?php echo (isset($apt['meeting_type']) && $apt['meeting_type'] == 'Online Meeting') ? 'video' : 'map-pin'; ?>" size="16"></i>
+                                <?php echo isset($apt['meeting_type']) ? $apt['meeting_type'] : 'In-Person'; ?>
+                            </div>
                         </div>
+                        
+                        <?php if(isset($apt['meeting_type']) && $apt['meeting_type'] == 'Online Meeting' && $apt['status'] == 'Confirmed' && !empty($apt['meeting_link'])): ?>
+                            <div class="mt-4">
+                                <a href="<?php echo htmlspecialchars($apt['meeting_link']); ?>" target="_blank" class="inline-flex items-center gap-2 bg-primary text-white hover:scale-105 px-6 py-3 rounded-xl font-bold transition-all shadow-md">
+                                    <i data-lucide="video" size="18"></i> Join Online Meeting
+                                </a>
+                            </div>
+                        <?php endif; ?>
                         
                         <?php if($apt['notes']): ?>
                             <div class="bg-accent/50 p-4 rounded-xl text-sm text-secondary/80 mt-4 border border-primary/10">

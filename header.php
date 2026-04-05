@@ -8,7 +8,15 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="City Care Hospital provides world-class medical care with a human touch. Book appointments easily and manage your healthcare journey with our top specialists.">
+    <meta name="keywords" content="hospital, healthcare, medical care, doctors, book appointment, clinic, cardiology, neurology, pediatrics, orthopedics, city care hospital">
+    <meta name="author" content="City Care Hospital">
+    <meta property="og:title" content="City Care Hospital - Your Health is Our Priority">
+    <meta property="og:description" content="Providing world-class medical care with a human touch. Book your online or in-person consultation today.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="City Care Hospital">
     <title>City Care Hospital</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,16 +93,20 @@ if (session_status() == PHP_SESSION_NONE) {
             </a>
 
             <div class="hidden md:flex items-center gap-8">
-                <a href="index.php" class="font-medium transition-colors hover:text-primary">Home</a>
-                <a href="services.php" class="font-medium transition-colors hover:text-primary">Services</a>
-                <a href="doctors.php" class="font-medium transition-colors hover:text-primary">Doctors</a>
-                <a href="patient-care.php" class="font-medium transition-colors hover:text-primary">Patient Care</a>
+                <?php if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin'): ?>
+                    <a href="index.php" class="font-medium transition-colors hover:text-primary">Home</a>
+                    <a href="services.php" class="font-medium transition-colors hover:text-primary">Services</a>
+                    <a href="doctors.php" class="font-medium transition-colors hover:text-primary">Doctors</a>
+                    <a href="patient-care.php" class="font-medium transition-colors hover:text-primary">Patient Care</a>
+                <?php endif; ?>
                 
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
                         <a href="admin_dashboard.php" class="font-bold transition-colors hover:text-primary ">Admin Portal</a>
+                        <a href="admin_messages.php" class="font-bold transition-colors hover:text-primary ">Messages</a>
                     <?php else: ?>
                         <a href="my_appointments.php" class="font-bold transition-colors hover:text-primary ">My Appointments</a>
+                        <a href="patient_messages.php" class="font-bold transition-colors hover:text-primary ">Messages</a>
                     <?php endif; ?>
                     <div class="flex items-center gap-4 border-l border-secondary/20 pl-6 ml-2">
                         <div class="flex items-center gap-2 bg-surface-soft pl-1 pr-4 py-1 rounded-full border border-secondary/10">
@@ -115,16 +127,20 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-4 right-4 glass-bar rounded-3xl p-6 shadow-2xl">
             <div class="flex flex-col gap-4">
-                <a href="index.php" class="text-lg font-medium">Home</a>
-                <a href="services.php" class="text-lg font-medium">Services</a>
-                <a href="doctors.php" class="text-lg font-medium">Doctors</a>
-                <a href="patient-care.php" class="text-lg font-medium">Patient Care</a>
-                <hr class="border-secondary/10" />
+                <?php if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin'): ?>
+                    <a href="index.php" class="text-lg font-medium">Home</a>
+                    <a href="services.php" class="text-lg font-medium">Services</a>
+                    <a href="doctors.php" class="text-lg font-medium">Doctors</a>
+                    <a href="patient-care.php" class="text-lg font-medium">Patient Care</a>
+                    <hr class="border-secondary/10" />
+                <?php endif; ?>
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
                         <a href="admin_dashboard.php" class="text-lg font-bold text-primary">Admin Portal</a>
+                        <a href="admin_messages.php" class="text-lg font-bold text-primary">Messages</a>
                     <?php else: ?>
                         <a href="my_appointments.php" class="text-lg font-bold text-primary">My Appointments</a>
+                        <a href="patient_messages.php" class="text-lg font-bold text-primary">Messages</a>
                     <?php endif; ?>
                     <hr class="border-secondary/10 my-2" />
                     <div class="flex items-center gap-3">

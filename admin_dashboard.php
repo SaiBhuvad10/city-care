@@ -11,7 +11,14 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION[
 
 include 'db_connect.php';
 
-$success_msg = isset($_GET['success']) ? "Appointment status updated successfully." : "";
+$success_msg = "";
+if (isset($_GET['success'])) {
+    if ($_GET['success'] == 'deleted') {
+        $success_msg = "Appointment deleted successfully.";
+    } else {
+        $success_msg = "Appointment status updated successfully.";
+    }
+}
 
 // Fetch all appointments
 $sql = "
@@ -35,10 +42,11 @@ include 'header.php';
             <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg">
                 <i data-lucide="shield-check" size="24"></i>
             </div>
-            <div>
+            <div class="flex-1">
                 <h1 class="text-4xl font-display font-bold text-secondary">Hospital Administration</h1>
                 <p class="text-secondary/70">Manage incoming patient appointments and portal access.</p>
             </div>
+            <a href="admin_messages.php" class="btn-secondary px-6 flex items-center gap-2"><i data-lucide="message-square" size="18"></i> Inbox</a>
         </div>
 
         <?php if($success_msg): ?>
@@ -87,6 +95,11 @@ include 'header.php';
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="clock" size="14" class="text-primary"></i> <?php echo $timeObj->format('g:i A'); ?>
                                     </div>
+                                    <div class="mt-2 mb-1">
+                                        <span class="inline-flex text-[10px] uppercase font-bold tracking-widest bg-primary/10 text-primary px-2 py-1 rounded">
+                                            <?php echo isset($row['meeting_type']) ? $row['meeting_type'] : 'In-Person'; ?>
+                                        </span>
+                                    </div>
                                     <?php if($row['notes']): ?>
                                         <div class="mt-2 text-xs bg-accent/50 p-2 rounded truncate max-w-xs" title="<?php echo htmlspecialchars($row['notes']); ?>">
                                             "<?php echo htmlspecialchars($row['notes']); ?>"
@@ -99,16 +112,27 @@ include 'header.php';
                                     </span>
                                 </td>
                                 <td class="p-6 text-right space-x-2">
-                                    <?php if($row['status'] == 'Pending'): ?>
-                                        <a href="admin_action.php?id=<?php echo $row['id']; ?>&action=confirm" class="inline-flex py-2 px-4 rounded-xl bg-green-500 hover:bg-green-600 text-white text-sm font-bold transition-all shadow-sm">
-                                            Confirm
+                                    <div class="flex justify-end items-center gap-2">
+                                        <?php if($row['status'] == 'Pending'): ?>
+                                            <?php if(isset($row['meeting_type']) && $row['meeting_type'] == 'Online Meeting'): ?>
+                                                <a href="admin_confirm_meeting.php?id=<?php echo $row['id']; ?>" class="inline-flex py-2 px-4 rounded-xl bg-green-500 hover:bg-green-600 text-white text-sm font-bold transition-all shadow-sm">
+                                                    Link & Confirm
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="admin_action.php?id=<?php echo $row['id']; ?>&action=confirm" class="inline-flex py-2 px-4 rounded-xl bg-green-500 hover:bg-green-600 text-white text-sm font-bold transition-all shadow-sm">
+                                                    Confirm
+                                                </a>
+                                            <?php endif; ?>
+                                            <a href="admin_action.php?id=<?php echo $row['id']; ?>&action=cancel" class="inline-flex py-2 px-4 rounded-xl bg-yellow-100 text-yellow-600 hover:bg-yellow-200 text-sm font-bold transition-all shadow-sm">
+                                                Cancel
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-xs text-secondary/40 font-bold uppercase tracking-widest mr-2">No Actions</span>
+                                        <?php endif; ?>
+                                        <a href="admin_action.php?id=<?php echo $row['id']; ?>&action=delete" onclick="return confirm('Are you sure you want to completely delete this appointment? This action cannot be undone.');" class="inline-flex p-2 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition-all font-bold group shadow-sm" title="Delete Appointment">
+                                            <i data-lucide="trash-2" size="18" class="group-hover:scale-110 transition-transform"></i>
                                         </a>
-                                        <a href="admin_action.php?id=<?php echo $row['id']; ?>&action=cancel" class="inline-flex py-2 px-4 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 text-sm font-bold transition-all">
-                                            Cancel
-                                        </a>
-                                    <?php else: ?>
-                                        <span class="text-xs text-secondary/40 font-bold uppercase tracking-widest">No Actions</span>
-                                    <?php endif; ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endwhile; ?>

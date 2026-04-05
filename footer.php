@@ -63,6 +63,7 @@
             </div>
         </div>
     </footer>
+    <?php include 'chatbot.php'; ?>
     <script>
         lucide.createIcons();
     </script>

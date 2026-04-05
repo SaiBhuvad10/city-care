@@ -7,23 +7,36 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $login_role = isset($_POST['login_role']) ? $_POST['login_role'] : 'patient';
 
     $sql = "SELECT id, full_name, password, role FROM users WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+        
+        // Treat anything that isn't 'admin' as 'patient' for comparison
+        $db_role = ($user['role'] == 'admin') ? 'admin' : 'patient';
+        
         if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['full_name'];
-            $_SESSION['user_role'] = $user['role'];
-            
-            if ($user['role'] == 'admin') {
-                header("Location: admin_dashboard.php");
+            if ($db_role != $login_role) {
+                if ($login_role == 'admin') {
+                    $error = "Access denied: Not an administrator account.";
+                } else {
+                    $error = "Admin accounts must log in as Administrator.";
+                }
             } else {
-                header("Location: my_appointments.php");
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['full_name'];
+                $_SESSION['user_role'] = $user['role'];
+                
+                if ($user['role'] == 'admin') {
+                    header("Location: admin_dashboard.php");
+                } else {
+                    header("Location: my_appointments.php");
+                }
+                exit();
             }
-            exit();
         } else {
             $error = "Invalid password!";
         }
@@ -45,7 +58,7 @@ include 'header.php';
                 <span class="font-display font-bold text-2xl tracking-tight text-primary">City Care</span>
             </a>
             <h1 class="text-3xl font-display font-bold text-secondary mb-2">Welcome Back</h1>
-            <p class="text-secondary/60">Log in to your patient portal account</p>
+            <p class="text-secondary/60">Log in to your account</p>
         </div>
 
         <?php if($error): ?>
@@ -55,6 +68,18 @@ include 'header.php';
         <?php endif; ?>
 
         <form class="space-y-6" method="POST" action="login.php">
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Login As</label>
+                <div class="relative group">
+                    <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 text-secondary/40 group-focus-within:text-primary transition-colors" size="20"></i>
+                    <select name="login_role" required class="w-full bg-surface-soft border-none rounded-2xl pl-14 pr-6 py-4 outline-none focus:ring-2 ring-primary/20 transition-all appearance-none cursor-pointer">
+                        <option value="patient">Patient</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="absolute right-5 top-1/2 -translate-y-1/2 text-secondary/40 pointer-events-none" size="20"></i>
+                </div>
+            </div>
+
             <div class="space-y-2">
                 <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest ml-1">Email Address</label>
                 <div class="relative group">

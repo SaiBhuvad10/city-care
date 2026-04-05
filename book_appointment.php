@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $appointment_date = $_POST['appointment_date'];
     $appointment_time = $_POST['appointment_time'];
     $notes = htmlspecialchars($_POST['notes']);
+    $meeting_type = isset($_POST['meeting_type']) ? $_POST['meeting_type'] : 'In-Person';
     
     // Server-side validation for time (9 AM to 5 PM)
     $time_hour = (int)date('H', strtotime($appointment_time));
@@ -41,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Appointment date cannot be in the past.";
     } else {
         // Insert appointment
-        $stmt = $conn->prepare("INSERT INTO appointments (user_id, doctor_id, appointment_date, appointment_time, notes, status) VALUES (?, ?, ?, ?, ?, 'Pending')");
-        $stmt->bind_param("iisss", $user_id, $doctor_id, $appointment_date, $appointment_time, $notes);
+        $stmt = $conn->prepare("INSERT INTO appointments (user_id, doctor_id, appointment_date, appointment_time, meeting_type, notes, status) VALUES (?, ?, ?, ?, ?, ?, 'Pending')");
+        $stmt->bind_param("iissss", $user_id, $doctor_id, $appointment_date, $appointment_time, $meeting_type, $notes);
         
         if ($stmt->execute()) {
             header("Location: my_appointments.php?success=1");
@@ -111,6 +112,17 @@ include 'header.php';
                                 class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20 text-secondary font-medium"
                             >
                             <p class="text-xs text-secondary/50 font-medium mt-1">Available 9:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-secondary/60 uppercase tracking-widest">Meeting Type</label>
+                        <div class="relative group">
+                            <select name="meeting_type" required class="w-full bg-surface-soft border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 ring-primary/20 text-secondary font-medium appearance-none cursor-pointer">
+                                <option value="In-Person">In-Person at Hospital</option>
+                                <option value="Online Meeting">Online Video Consultation</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-5 top-1/2 -translate-y-1/2 text-secondary/40 pointer-events-none" size="20"></i>
                         </div>
                     </div>
                     

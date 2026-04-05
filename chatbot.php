@@ -102,7 +102,7 @@
             showTyping();
 
             // Process reply
-            const reply = await getBotResponse(text);
+            const reply = getBotResponse(text);
             removeTyping();
             appendMessage('bot', reply);
         });
@@ -114,7 +114,7 @@
                 appendMessage('user', text);
                 showTyping();
 
-                const reply = await getBotResponse(text);
+                const reply = getBotResponse(text);
                 removeTyping();
                 appendMessage('bot', reply);
             });
@@ -165,25 +165,29 @@
             }
         }
 
-        // Bot Logic Engine utilizing Gemini API
-        async function getBotResponse(input) {
-            try {
-                const response = await fetch('gemini_chat_api.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: input })
-                });
-                const data = await response.json();
-                if (data.reply) {
-                    return data.reply;
-                } else {
-                    console.error("API Error:", data);
-                    return "I apologize, our hospital systems are currently unable to reach the AI engine. Please try again later or call us directly.";
-                }
-            } catch (error) {
-                console.error("Fetch Error:", error);
-                return "Connection error. Please check your internet connection and try again.";
+        // Rule-Based Bot Logic
+        function getBotResponse(input) {
+            const text = input.toLowerCase();
+
+            if (text.includes("appointment") || text.includes("book")) {
+                return "You can book an appointment on our <a href='doctors.php' class='text-primary font-bold hover:underline font-bold'>Doctors</a> page.";
             }
+            if (text.includes("doctor") || text.includes("specialist")) {
+                return "Visit our <a href='doctors.php' class='text-primary font-bold hover:underline font-bold'>Doctors</a> page to see our medical experts.";
+            }
+            if (text.includes("emergency")) {
+                return "For emergencies, call **+1 (555) 123-4567** or visit our 24/7 ER at 123 Medical Plaza.";
+            }
+            if (text.includes("hour") || text.includes("time") || text.includes("open")) {
+                return "We are open Mon-Sat, 9 AM - 5 PM. The Emergency Room is open 24/7.";
+            }
+            if (text.includes("location") || text.includes("address")) {
+                return "We are located at 123 Medical Plaza, Health City, HC 45678.";
+            }
+            if (text.includes("hello") || text.includes("hi")) {
+                return "Hello! Welcome to City Care. How can I help you today?";
+            }
+            return "I'm not sure about that. Please contact our front desk at +1 (555) 123-4567 for more details.";
         }
     })();
 </script>

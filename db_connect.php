@@ -1,10 +1,10 @@
 <?php
 // Database Configuration
-$servername = "127.0.0.1"; // Using IP instead of 'localhost' can sometimes fix Access Denied issues
-$username = "root";
-$password = ""; // If you set a password for your XAMPP MySQL, enter it here
-$dbname = "city_care_db";
-$port = 3307;
+$servername = "sql204.infinityfree.com"; // Using IP instead of 'localhost' can sometimes fix Access Denied issues
+$username = "if0_41593958";
+$password = "SaiBhuvad51"; // If you set a password for your XAMPP MySQL, enter it here
+$dbname = "if0_41593958_city_care_db";
+$port = 3306;
 
 // Enable error reporting for mysqli to catch exceptions
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -13,7 +13,7 @@ try {
     // Create connection to the server first
     // If you get "Access denied", it means your 'root' user has a password.
     // Please update the $password variable above.
-    $conn = new mysqli($servername, $username, $password, null, $port);
+    $conn = new mysqli($servername, $username, $password, $dbname, $port);
 } catch (mysqli_sql_exception $e) {
     die("<div style='padding: 20px; background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; border-radius: 12px; font-family: sans-serif; margin: 20px;'>
         <h2 style='margin-top: 0;'>Database Connection Error</h2>

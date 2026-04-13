@@ -12,11 +12,9 @@ include 'db_connect.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Handle message submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = trim($_POST['message']);
     if (!empty($message)) {
-        // Send to hospital (receiver_id is NULL)
         $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, NULL, ?)");
         $stmt->bind_param("is", $user_id, $message);
         $stmt->execute();
@@ -25,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch all messages for this user (sent by user or sent to user)
 $stmt = $conn->prepare("
     SELECT m.*, u.full_name AS sender_name, u.role AS sender_role 
     FROM messages m 
@@ -55,7 +52,6 @@ include 'header.php';
             <a href="my_appointments.php" class="btn-secondary px-6">Back to Dashboard</a>
         </div>
 
-        <!-- Chat Window -->
         <div class="flex-1 bg-white rounded-[2rem] shadow-xl overflow-hidden flex flex-col border border-secondary/5">
             <div class="flex-1 p-8 overflow-y-auto space-y-6" id="chatbox">
                 <?php if ($messages->num_rows == 0): ?>
@@ -84,7 +80,6 @@ include 'header.php';
                 <?php endif; ?>
             </div>
 
-            <!-- Input Area -->
             <div class="p-6 bg-surface-soft border-t border-secondary/10">
                 <form method="POST" action="patient_messages.php" class="relative">
                     <input 
@@ -105,7 +100,6 @@ include 'header.php';
 </div>
 
 <script>
-    // Scroll to bottom
     const chatbox = document.getElementById('chatbox');
     if (chatbox) {
         chatbox.scrollTop = chatbox.scrollHeight;

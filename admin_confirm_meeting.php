@@ -17,7 +17,6 @@ if (!isset($_GET['id'])) {
 $appointment_id = (int)$_GET['id'];
 $error = "";
 
-// Fetch appointment details
 $stmt = $conn->prepare("SELECT a.*, u.full_name AS patient_name FROM appointments a JOIN users u ON a.user_id = u.id WHERE a.id = ?");
 $stmt->bind_param("i", $appointment_id);
 $stmt->execute();

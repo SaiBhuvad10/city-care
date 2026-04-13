@@ -7,7 +7,6 @@ $result = $conn->query($sql);
 ?>
 
 <div class="pt-24 min-h-screen">
-    <!-- Header Section -->
     <section class="px-6 py-20 bg-surface-soft">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-5xl md:text-7xl font-display font-extrabold text-secondary leading-tight mb-8">
@@ -19,7 +18,6 @@ $result = $conn->query($sql);
         </div>
     </section>
 
-    <!-- Services Grid -->
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <?php
@@ -57,7 +55,6 @@ $result = $conn->query($sql);
         </div>
     </section>
 
-    <!-- Why Choose Us -->
     <section class="py-24 px-6 bg-secondary text-white rounded-[4rem] mx-6 mb-24 overflow-hidden relative">
         <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
             <div class="absolute top-1/2 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>

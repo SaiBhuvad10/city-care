@@ -4,8 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require 'db_connect.php';
 
-// IMPORTANT: Replace these with your actual Google API credentials
-// Do not hardcode these values in a public repository!
 include 'secrets.php';
 $client_id = $google_client_id;
 $client_secret = $google_client_secret;
@@ -14,7 +12,6 @@ $redirect_uri = 'http://localhost/city-care/google_callback.php';
 if (isset($_GET['code'])) {
     $code = $_GET['code'];
     
-    // Exchange code for token
     $token_url = 'https://oauth2.googleapis.com/token';
     $data = [
         'code' => $code,
@@ -37,7 +34,6 @@ if (isset($_GET['code'])) {
     if (isset($token_data['access_token'])) {
         $access_token = $token_data['access_token'];
         
-        // Get user profile info
         $profile_url = 'https://www.googleapis.com/oauth2/v2/userinfo';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $profile_url);
@@ -54,19 +50,16 @@ if (isset($_GET['code'])) {
             $full_name = $user_info['name'] ?? 'Google User';
             $oauth_provider = 'google';
             
-            // Try to find an existing user using Google OAuth
             $stmt = $conn->prepare("SELECT id, full_name FROM users WHERE oauth_uid = ? AND oauth_provider = ?");
             $stmt->bind_param("ss", $oauth_uid, $oauth_provider);
             $stmt->execute();
             $result = $stmt->get_result();
             
             if ($result->num_rows > 0) {
-                // Login existing user
                 $row = $result->fetch_assoc();
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['full_name'];
             } else {
-                // If OAuth user doesn't exist, check standard email just in case
                 $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
                 $stmt->bind_param("s", $email);
                 $stmt->execute();
@@ -75,7 +68,6 @@ if (isset($_GET['code'])) {
                 if ($email_check->num_rows > 0) {
                     die("<div style='padding:20px; font-family:sans-serif;'>This email is already registered using a standard password. Please log in normally.</div>");
                 } else {
-                    // Register new user seamlessly
                     $stmt = $conn->prepare("INSERT INTO users (full_name, email, oauth_provider, oauth_uid) VALUES (?, ?, ?, ?)");
                     $stmt->bind_param("ssss", $full_name, $email, $oauth_provider, $oauth_uid);
                     $stmt->execute();
@@ -90,6 +82,5 @@ if (isset($_GET['code'])) {
     }
 }
 
-// Fallback message if something failed
 die("<div style='padding:20px; font-family:sans-serif;'>Google Authentication Failed. Ensure API keys are correct. <a href='login.php'>Return to login</a></div>");
 ?>

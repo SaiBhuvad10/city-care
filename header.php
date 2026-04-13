@@ -15,7 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
     $host = $_SERVER['HTTP_HOST'];
     $current_url = $protocol . "://" . $host . $_SERVER['REQUEST_URI'];
-    $base_url = $protocol . "://" . $host . "/"; // Adjust if in subdirectory
+    $base_url = $protocol . "://" . $host . "/";
     if(strpos($host, 'localhost') !== false) {
         $base_url = $protocol . "://" . $host . "/city-care/";
     }
@@ -101,7 +101,6 @@ if (session_status() == PHP_SESSION_NONE) {
     <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // One-time hard reset to clear InfinityFree manifest/sw errors
       if (!localStorage.getItem('pwa_reset_v3')) {
         navigator.serviceWorker.getRegistrations().then(registrations => {
           for (let registration of registrations) {
@@ -112,7 +111,6 @@ if (session_status() == PHP_SESSION_NONE) {
         });
       }
 
-      // Register sw.php only if NOT on InfinityFree (to avoid security errors)
       if (!window.location.hostname.includes('42web.io')) {
           navigator.serviceWorker.register('sw.php')
             .then(reg => console.log('Service Worker registered'))

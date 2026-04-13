@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         
-        // Treat anything that isn't 'admin' as 'patient' for comparison
         $db_role = ($user['role'] == 'admin') ? 'admin' : 'patient';
         
         if (password_verify($password, $user['password'])) {

@@ -1,9 +1,7 @@
--- City Care Hospital Database Setup
 
 CREATE DATABASE IF NOT EXISTS city_care_db;
 USE city_care_db;
 
--- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
@@ -12,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Doctors Table
 CREATE TABLE IF NOT EXISTS doctors (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -22,7 +19,6 @@ CREATE TABLE IF NOT EXISTS doctors (
     rating DECIMAL(2,1)
 );
 
--- Services Table
 CREATE TABLE IF NOT EXISTS services (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -30,7 +26,6 @@ CREATE TABLE IF NOT EXISTS services (
     icon VARCHAR(50)
 );
 
--- Sample Doctors
 INSERT INTO doctors (name, specialty, image_url, experience, rating) VALUES
 ('Dr. Sarah Johnson', 'Cardiologist', 'https://images.unsplash.com/photo-1559839734-2b71f1536780?auto=format&fit=crop&q=80&w=400', '15 Years', 4.9),
 ('Dr. Michael Chen', 'Neurologist', 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400', '12 Years', 4.8),
@@ -39,7 +34,6 @@ INSERT INTO doctors (name, specialty, image_url, experience, rating) VALUES
 ('Dr. Lisa Thompson', 'Oncologist', 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&q=80&w=400', '14 Years', 4.9),
 ('Dr. James Wilson', 'Dermatologist', 'https://images.unsplash.com/photo-1612531388260-6303b896c7c6?auto=format&fit=crop&q=80&w=400', '9 Years', 4.6);
 
--- Sample Services
 INSERT INTO services (title, description, icon) VALUES
 ('Emergency Care', '24/7 rapid response medical assistance for critical conditions.', 'ambulance'),
 ('Cardiology', 'Comprehensive heart health diagnostics and advanced treatments.', 'heart'),

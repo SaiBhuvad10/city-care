@@ -19,7 +19,6 @@ $result = $conn->query($sql);
 ?>
 
 <div class="pt-24 min-h-screen">
-    <!-- Header Section -->
     <section class="px-6 py-20 bg-surface-soft">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-5xl md:text-7xl font-display font-extrabold text-secondary leading-tight mb-8">
@@ -29,7 +28,6 @@ $result = $conn->query($sql);
                 Our team of highly skilled and compassionate doctors is here to provide you with the best medical care and support.
             </p>
             
-            <!-- Search and Filter Bar -->
             <form action="doctors.php" method="GET" class="max-w-4xl mx-auto glass-bar rounded-full p-2 flex flex-col md:flex-row items-center gap-2 shadow-xl">
                 <div class="flex-1 flex items-center justify-center gap-4 px-6 py-3 w-full">
                     <i data-lucide="search" class="text-secondary/40" size="20"></i>
@@ -59,7 +57,6 @@ $result = $conn->query($sql);
         </div>
     </section>
 
-    <!-- Doctors Grid -->
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <?php

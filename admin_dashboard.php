@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Security Check: Ensure user is logged in AND is an admin
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header("Location: index.php");
     exit();
@@ -20,7 +19,6 @@ if (isset($_GET['success'])) {
     }
 }
 
-// Fetch all appointments
 $sql = "
     SELECT a.*, 
            u.full_name AS patient_name, u.email AS patient_email,

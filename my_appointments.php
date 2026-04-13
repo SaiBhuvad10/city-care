@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -14,7 +13,6 @@ include 'db_connect.php';
 $user_id = $_SESSION['user_id'];
 $success_msg = isset($_GET['success']) ? "Your appointment request has been submitted and is currently Pending approval." : "";
 
-// Fetch user's appointments
 $stmt = $conn->prepare("
     SELECT a.*, d.name AS doctor_name, d.specialty, d.image_url 
     FROM appointments a 
@@ -53,13 +51,11 @@ include 'header.php';
         <?php if ($appointments->num_rows > 0): ?>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <?php while($apt = $appointments->fetch_assoc()): 
-                    // Format dates and times
                     $dateObj = new DateTime($apt['appointment_date']);
                     $formattedDate = $dateObj->format('F j, Y');
                     $timeObj = new DateTime($apt['appointment_time']);
                     $formattedTime = $timeObj->format('g:i A');
                     
-                    // Status color logic
                     $statusColor = "bg-yellow-100 text-yellow-800";
                     $statusIcon = "clock";
                     if ($apt['status'] == 'Confirmed') {

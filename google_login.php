@@ -1,5 +1,4 @@
 <?php
-// Replace with your actual Google Client ID
 include 'secrets.php';
 $client_id = $google_client_id;
 $redirect_uri = 'http://localhost/city-care/google_callback.php';

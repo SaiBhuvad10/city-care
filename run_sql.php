@@ -1,7 +1,6 @@
 <?php
 require 'db_connect.php';
 
-// Create messages table
 $sql1 = "CREATE TABLE IF NOT EXISTS messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sender_id INT NOT NULL,
@@ -16,7 +15,6 @@ if ($conn->query($sql1)) {
     echo "Error creating messages: " . $conn->error . "\n";
 }
 
-// Alter appointments table
 $sql2 = "ALTER TABLE appointments ADD meeting_type VARCHAR(50) DEFAULT 'In-Person'";
 if ($conn->query($sql2)) {
     echo "meeting_type added.\n";

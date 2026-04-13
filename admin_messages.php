@@ -12,7 +12,6 @@ include 'db_connect.php';
 
 $admin_id = $_SESSION['user_id'];
 
-// Get all patients who have interacted via messages
 $patients_sql = "
     SELECT u.id, u.full_name, u.email, MAX(m.created_at) as last_msg_time
     FROM users u 
@@ -29,11 +28,9 @@ while ($row = $patients_result->fetch_assoc()) {
 
 $active_patient_id = isset($_GET['patient_id']) ? (int)$_GET['patient_id'] : ($patients[0]['id'] ?? 0);
 
-// Handle message submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $active_patient_id > 0) {
     $message = trim($_POST['message']);
     if (!empty($message)) {
-        // Send to patient (receiver_id is patient id)
         $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)");
         $stmt->bind_param("iis", $admin_id, $active_patient_id, $message);
         $stmt->execute();
@@ -42,17 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $active_patient_id > 0) {
     }
 }
 
-// Fetch messages for active patient
 $messages = [];
 $active_patient = null;
 if ($active_patient_id > 0) {
-    // Get patient details
     $stmt = $conn->prepare("SELECT full_name, email FROM users WHERE id = ?");
     $stmt->bind_param("i", $active_patient_id);
     $stmt->execute();
     $active_patient = $stmt->get_result()->fetch_assoc();
 
-    // Get messages
     $stmt = $conn->prepare("
         SELECT m.*, u.role AS sender_role 
         FROM messages m 
@@ -86,7 +80,6 @@ include 'header.php';
         </div>
 
         <div class="flex-1 flex gap-6 overflow-hidden">
-            <!-- Sidebar: Patients List -->
             <div class="w-1/3 bg-white rounded-[2rem] shadow-xl border border-secondary/5 hidden md:flex flex-col overflow-hidden">
                 <div class="p-6 border-b border-secondary/10 bg-surface-soft">
                     <h3 class="font-bold text-secondary uppercase tracking-widest text-sm">Conversations</h3>
@@ -112,7 +105,6 @@ include 'header.php';
                 </div>
             </div>
 
-            <!-- Main Chat Area -->
             <div class="flex-1 bg-white rounded-[2rem] shadow-xl border border-secondary/5 flex flex-col overflow-hidden">
                 <?php if($active_patient_id == 0): ?>
                     <div class="flex-1 flex flex-col items-center justify-center text-secondary/50 p-8 text-center">

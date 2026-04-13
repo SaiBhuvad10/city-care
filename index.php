@@ -2,16 +2,13 @@
 include 'header.php'; 
 include 'db_connect.php';
 
-// Fetch stats
 $doctorCount = $conn->query("SELECT COUNT(*) as count FROM doctors")->fetch_assoc()['count'];
 $serviceCount = $conn->query("SELECT COUNT(*) as count FROM services")->fetch_assoc()['count'];
 
-// Fetch featured services
 $featuredServices = $conn->query("SELECT * FROM services LIMIT 3");
 ?>
 
 <div class="pt-24">
-    <!-- Hero Section -->
     <section class="relative px-6 py-20 overflow-hidden">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -59,7 +56,6 @@ $featuredServices = $conn->query("SELECT * FROM services LIMIT 3");
         </div>
     </section>
 
-    <!-- Stats Section -->
     <section class="py-20 px-6 bg-surface-soft">
         <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="text-center">
@@ -93,7 +89,6 @@ $featuredServices = $conn->query("SELECT * FROM services LIMIT 3");
         </div>
     </section>
 
-    <!-- Featured Services -->
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
@@ -127,7 +122,6 @@ $featuredServices = $conn->query("SELECT * FROM services LIMIT 3");
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto bg-primary rounded-[4rem] p-12 md:p-24 relative overflow-hidden text-center">
             <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">

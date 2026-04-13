@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -15,7 +14,6 @@ $doctor_id = isset($_GET['doctor_id']) ? (int)$_GET['doctor_id'] : 0;
 $user_id = $_SESSION['user_id'];
 $error = "";
 
-// Fetch doctor info
 $stmt = $conn->prepare("SELECT * FROM doctors WHERE id = ?");
 $stmt->bind_param("i", $doctor_id);
 $stmt->execute();
@@ -27,21 +25,18 @@ if ($doctor_result->num_rows == 0) {
 }
 $doctor = $doctor_result->fetch_assoc();
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $appointment_date = $_POST['appointment_date'];
     $appointment_time = $_POST['appointment_time'];
     $notes = htmlspecialchars($_POST['notes']);
     $meeting_type = isset($_POST['meeting_type']) ? $_POST['meeting_type'] : 'In-Person';
     
-    // Server-side validation for time (9 AM to 5 PM)
     $time_hour = (int)date('H', strtotime($appointment_time));
     if ($time_hour < 9 || $time_hour >= 17) {
         $error = "Appointments are only available between 9:00 AM and 5:00 PM.";
     } elseif ($appointment_date < date('Y-m-d')) {
         $error = "Appointment date cannot be in the past.";
     } else {
-        // Insert appointment
         $stmt = $conn->prepare("INSERT INTO appointments (user_id, doctor_id, appointment_date, appointment_time, meeting_type, notes, status) VALUES (?, ?, ?, ?, ?, ?, 'Pending')");
         $stmt->bind_param("iissss", $user_id, $doctor_id, $appointment_date, $appointment_time, $meeting_type, $notes);
         
@@ -73,7 +68,6 @@ include 'header.php';
         <?php endif; ?>
 
         <div class="bg-white rounded-[3rem] shadow-xl overflow-hidden flex flex-col md:flex-row">
-            <!-- Doctor Info Side -->
             <div class="md:w-1/3 bg-surface-soft p-10 flex flex-col items-center text-center">
                 <img src="<?php echo $doctor['image_url']; ?>" alt="<?php echo $doctor['name']; ?>" class="w-40 h-40 object-cover rounded-full shadow-lg mb-6 border-4 border-white">
                 <div class="text-primary font-bold text-sm uppercase tracking-widest mb-1"><?php echo $doctor['specialty']; ?></div>
@@ -87,7 +81,6 @@ include 'header.php';
                 </p>
             </div>
             
-            <!-- Booking Form Side -->
             <div class="md:w-2/3 p-10">
                 <form method="POST" action="book_appointment.php?doctor_id=<?php echo $doctor_id; ?>" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

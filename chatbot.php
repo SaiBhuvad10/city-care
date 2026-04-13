@@ -1,5 +1,4 @@
 <div id="chatbot-container" class="fixed bottom-6 right-6 z-[100] font-sans">
-    <!-- Chatbot Toggle Button -->
     <button type="button" id="chatbot-toggle"
         class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform relative z-[110]">
         <span id="chatbot-icon-open"><i data-lucide="message-circle" size="28"></i></span>
@@ -7,10 +6,8 @@
         <span class="absolute top-0 right-0 w-4 h-4 bg-red-500 border-2 border-white rounded-full"></span>
     </button>
 
-    <!-- Chatbot Window -->
     <div id="chatbot-window"
         class="hidden absolute bottom-20 right-0 w-[350px] bg-white rounded-3xl shadow-2xl border border-secondary/10 flex flex-col overflow-hidden transition-all origin-bottom-right">
-        <!-- Header -->
         <div class="bg-primary text-white p-4 flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <i data-lucide="bot" size="20"></i>
@@ -21,9 +18,7 @@
             </div>
         </div>
 
-        <!-- Chat Area -->
         <div id="chatbot-messages" class="flex-1 h-[350px] p-4 overflow-y-auto space-y-4 bg-surface-soft text-sm">
-            <!-- Greeting Message -->
             <div class="flex items-start gap-2">
                 <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white flex-shrink-0">
                     <i data-lucide="bot" size="14"></i>
@@ -45,7 +40,6 @@
             </div>
         </div>
 
-        <!-- Input Area -->
         <div class="p-4 bg-white border-t border-secondary/10">
             <form id="chatbot-form" class="relative flex items-center gap-2">
                 <input type="text" id="chatbot-input"
@@ -71,7 +65,6 @@
 
         if (!toggleBtn || !chatWindow) return;
 
-        // Toggle Chatbot
         toggleBtn.addEventListener('click', (e) => {
             e.preventDefault();
             chatWindow.classList.toggle('hidden');
@@ -89,7 +82,6 @@
             }
         });
 
-        // Handle User Input
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
@@ -98,16 +90,13 @@
             appendMessage('user', text);
             chatInput.value = '';
 
-            // Show typing indicator
             showTyping();
 
-            // Process reply
             const reply = getBotResponse(text);
             removeTyping();
             appendMessage('bot', reply);
         });
 
-        // Handle Quick Replies
         quickReplies.forEach(btn => {
             btn.addEventListener('click', async function () {
                 const text = this.innerText;
@@ -165,7 +154,6 @@
             }
         }
 
-        // Rule-Based Bot Logic
         function getBotResponse(input) {
             const text = input.toLowerCase();
 

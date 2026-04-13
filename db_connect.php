@@ -1,18 +1,13 @@
 <?php
-// Database Configuration
-$servername = "sql204.infinityfree.com"; // Using IP instead of 'localhost' can sometimes fix Access Denied issues
+$servername = "sql204.infinityfree.com";
 $username = "if0_41593958";
-$password = "SaiBhuvad51"; // If you set a password for your XAMPP MySQL, enter it here
+$password = "SaiBhuvad51";
 $dbname = "if0_41593958_city_care_db";
 $port = 3306;
 
-// Enable error reporting for mysqli to catch exceptions
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
-    // Create connection to the server first
-    // If you get "Access denied", it means your 'root' user has a password.
-    // Please update the $password variable above.
     $conn = new mysqli($servername, $username, $password, $dbname, $port);
 } catch (mysqli_sql_exception $e) {
     die("<div style='padding: 20px; background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; border-radius: 12px; font-family: sans-serif; margin: 20px;'>
@@ -22,9 +17,8 @@ try {
     </div>");
 }
 
-// Select the database
+
 if (!$conn->select_db($dbname)) {
-    // If database doesn't exist, try to create it
     $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
     if ($conn->query($sql) === TRUE) {
         $conn->select_db($dbname);
@@ -33,10 +27,8 @@ if (!$conn->select_db($dbname)) {
     }
 }
 
-// Check if tables exist, if not, create them
 $tableExists = $conn->query("SHOW TABLES LIKE 'users'");
 if ($tableExists->num_rows == 0) {
-    // Users Table
     $conn->query("CREATE TABLE users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
@@ -47,7 +39,6 @@ if ($tableExists->num_rows == 0) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
-    // Doctors Table
     $conn->query("CREATE TABLE doctors (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -57,7 +48,6 @@ if ($tableExists->num_rows == 0) {
         rating DECIMAL(2,1)
     )");
 
-    // Services Table
     $conn->query("CREATE TABLE services (
         id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
@@ -65,7 +55,6 @@ if ($tableExists->num_rows == 0) {
         icon VARCHAR(50)
     )");
 
-    // Insert Sample Data if empty
     $conn->query("INSERT INTO doctors (name, specialty, image_url, experience, rating) VALUES
     ('Dr. Sarah Johnson', 'Cardiologist', 'https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400', '15 Years', 4.9),
     ('Dr. Michael Chen', 'Neurologist', 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400', '12 Years', 4.8),
@@ -82,7 +71,6 @@ if ($tableExists->num_rows == 0) {
     ('Orthopedics', 'Advanced treatment for bone, joint, and muscle conditions.', 'bone'),
     ('Oncology', 'Personalized cancer treatment plans and compassionate care.', 'microscope')");
 } else {
-    // If the table exists, make sure the OAuth columns are added
     $checkOAuth = $conn->query("SHOW COLUMNS FROM users LIKE 'oauth_provider'");
     if($checkOAuth->num_rows == 0) {
         $conn->query("ALTER TABLE users 
@@ -92,19 +80,16 @@ if ($tableExists->num_rows == 0) {
     }
 }
 
-// Add role column and master admin if not exists
 $checkRole = $conn->query("SHOW COLUMNS FROM users LIKE 'role'");
 if ($checkRole->num_rows == 0) {
     $conn->query("ALTER TABLE users ADD role VARCHAR(20) DEFAULT 'patient' AFTER email");
     
-    // Create master admin account
     $admin_password = password_hash("admin123", PASSWORD_DEFAULT);
     $conn->query("INSERT INTO users (full_name, email, password, role) 
                   VALUES ('System Admin', 'admin@citycarehospital.com', '$admin_password', 'admin') 
                   ON DUPLICATE KEY UPDATE role='admin'");
 }
 
-// Check if appointments table exists
 $checkAppointments = $conn->query("SHOW TABLES LIKE 'appointments'");
 if($checkAppointments->num_rows == 0) {
     $conn->query("CREATE TABLE appointments (
@@ -120,7 +105,6 @@ if($checkAppointments->num_rows == 0) {
     )");
 }
 
-// Check if messages table exists
 $checkMessages = $conn->query("SHOW TABLES LIKE 'messages'");
 if($checkMessages->num_rows == 0) {
     $conn->query("CREATE TABLE messages (

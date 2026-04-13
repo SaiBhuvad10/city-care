@@ -1,7 +1,6 @@
 <?php include 'header.php'; ?>
 
 <div class="pt-24 min-h-screen">
-    <!-- Hero Section -->
     <section class="px-6 py-20 bg-surface-soft">
         <div class="max-w-7xl mx-auto text-center">
             <div class="inline-flex items-center gap-2 bg-accent text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
@@ -17,7 +16,6 @@
         </div>
     </section>
 
-    <!-- Patient Resources -->
     <section class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-24">
@@ -69,7 +67,6 @@
                 </div>
             </div>
 
-            <!-- FAQ Section -->
             <div class="bg-white rounded-[4rem] p-12 md:p-24 shadow-sm">
                 <h2 class="text-4xl font-display font-bold text-secondary text-center mb-16">Frequently Asked Questions</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -94,7 +91,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="py-24 px-6 bg-primary text-white rounded-[4rem] mx-6 mb-24 overflow-hidden relative">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div>

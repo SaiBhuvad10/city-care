@@ -116,8 +116,20 @@ if($checkAppointments->num_rows == 0) {
         status VARCHAR(50) DEFAULT 'Pending',
         notes TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
         FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE
+    )");
+}
+
+// Check if messages table exists
+$checkMessages = $conn->query("SHOW TABLES LIKE 'messages'");
+if($checkMessages->num_rows == 0) {
+    $conn->query("CREATE TABLE messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sender_id INT NOT NULL,
+        receiver_id INT NULL,
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
     )");
 }
 ?>

@@ -11,19 +11,75 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta name="description" content="City Care Hospital provides world-class medical care with a human touch. Book appointments easily and manage your healthcare journey with our top specialists.">
     <meta name="keywords" content="hospital, healthcare, medical care, doctors, book appointment, clinic, cardiology, neurology, pediatrics, orthopedics, city care hospital">
     <meta name="author" content="City Care Hospital">
+    <?php
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'];
+    $current_url = $protocol . "://" . $host . $_SERVER['REQUEST_URI'];
+    $base_url = $protocol . "://" . $host . "/"; // Adjust if in subdirectory
+    if(strpos($host, 'localhost') !== false) {
+        $base_url = $protocol . "://" . $host . "/city-care/";
+    }
+    ?>
     <meta property="og:title" content="City Care Hospital - Your Health is Our Priority">
     <meta property="og:description" content="Providing world-class medical care with a human touch. Book your online or in-person consultation today.">
+    <meta property="og:image" content="<?php echo $base_url; ?>icon-512x512.png">
+    <meta property="og:url" content="<?php echo $current_url; ?>">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="City Care Hospital">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="City Care Hospital">
+    <meta name="twitter:description" content="World-class medical care with a human touch.">
+    <meta name="twitter:image" content="<?php echo $base_url; ?>icon-512x512.png">
+    <link id="manifest-link" rel="manifest" href="">
+    <script>
+        const origin = window.location.origin;
+        const manifest = {
+            "name": "City Care Hospital",
+            "short_name": "City Care",
+            "description": "City Care Hospital - Your health is our priority.",
+            "start_url": origin + "/index.php",
+            "display": "standalone",
+            "background_color": "#faf8ff",
+            "theme_color": "#0052c6",
+            "orientation": "portrait-primary",
+            "icons": [
+                {
+                    "src": origin + "/icon-512x512.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                },
+                {
+                    "src": origin + "/icon-512x512.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ],
+            "scope": origin + "/",
+            "lang": "en-US",
+            "dir": "ltr"
+        };
+        const stringManifest = JSON.stringify(manifest);
+        const blob = new Blob([stringManifest], {type: 'application/manifest+json'});
+        const manifestURL = URL.createObjectURL(blob);
+        document.querySelector('#manifest-link').setAttribute('href', manifestURL);
+    </script>
+<meta name="theme-color" content="#0052c6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="City Care">
+
     <title>City Care Hospital</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="<?php echo $base_url; ?>favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            production: true,
             theme: {
                 extend: {
                     fontFamily: {
@@ -42,6 +98,32 @@ if (session_status() == PHP_SESSION_NONE) {
             }
         }
     </script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // One-time hard reset to clear InfinityFree manifest/sw errors
+      if (!localStorage.getItem('pwa_reset_v3')) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+          localStorage.setItem('pwa_reset_v3', 'true');
+          window.location.reload();
+        });
+      }
+
+      // Register sw.php only if NOT on InfinityFree (to avoid security errors)
+      if (!window.location.hostname.includes('42web.io')) {
+          navigator.serviceWorker.register('sw.php')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.log('Service Worker registration failed', err));
+      } else {
+          console.log('Service Worker disabled on InfinityFree to prevent security errors.');
+      }
+    });
+  }
+</script>
+
     <style>
         body {
             background-color: #faf8ff;

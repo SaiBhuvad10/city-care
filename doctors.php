@@ -112,20 +112,7 @@ $result = $conn->query($sql);
         </div>
     </section>
 
-    <!-- Join Our Team CTA -->
-    <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto bg-accent rounded-[4rem] p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div class="max-w-xl text-center md:text-left">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary mb-6">
-                    Are you a medical professional?
-                </h2>
-                <p class="text-lg text-secondary/70 leading-relaxed">
-                    Join our team of world-class specialists and help us shape the future of healthcare. We offer a collaborative environment and state-of-the-art facilities.
-                </p>
-            </div>
-            <button class="btn-primary px-12 py-5 text-lg">Apply to Join</button>
-        </div>
-    </section>
+
 </div>
 
 <?php include 'footer.php'; ?>
